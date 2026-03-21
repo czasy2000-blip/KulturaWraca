@@ -17,8 +17,8 @@ const NAV_HTML = `
       <li><a href="/KulturaWraca/blog.html" data-page="blog">Blog</a></li>
       <li><a href="/KulturaWraca/kontakt.html" data-page="kontakt">Kontakt</a></li>
     </ul>
-    <div class="nav-right">
-      <a href="https://www.facebook.com/profile.php?id=100090801495391" target="_blank" class="nav-fb">
+    <div class="nav-right" style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
+      <a href="https://www.facebook.com/profile.php?id=100090801495391" target="_blank" class="nav-fb" style="display:flex;align-items:center;gap:5px;white-space:nowrap;">
         <svg viewBox="0 0 24 24" fill="#1877F2" width="16" height="16"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
         Facebook
       </a>
