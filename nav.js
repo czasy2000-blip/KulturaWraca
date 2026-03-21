@@ -1,7 +1,7 @@
 const NAV_HTML = `
 <nav class="nav">
   <div class="nav-inner">
-    <a href="/" class="logo">
+    <a href="/KulturaWraca/" class="logo">
       <div class="logo-icon">
         <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
       </div>
@@ -11,18 +11,18 @@ const NAV_HTML = `
       </div>
     </a>
     <ul class="nav-links">
-      <li><a href="/" data-page="index">Skup książek</a></li>
-      <li><a href="/jak-to-dziala" data-page="jak-to-dziala">Jak to działa</a></li>
-      <li><a href="/kim-jestesmy" data-page="kim-jestesmy">Kim jesteśmy</a></li>
-      <li><a href="/blog" data-page="blog">Blog</a></li>
-      <li><a href="/kontakt" data-page="kontakt">Kontakt</a></li>
+      <li><a href="/KulturaWraca/" data-page="index">Skup książek</a></li>
+      <li><a href="/KulturaWraca/jak-to-dziala.html" data-page="jak-to-dziala">Jak to działa</a></li>
+      <li><a href="/KulturaWraca/kim-jestesmy.html" data-page="kim-jestesmy">Kim jesteśmy</a></li>
+      <li><a href="/KulturaWraca/blog.html" data-page="blog">Blog</a></li>
+      <li><a href="/KulturaWraca/kontakt.html" data-page="kontakt">Kontakt</a></li>
     </ul>
     <div class="nav-right">
       <a href="https://facebook.com/kulturawraca" target="_blank" class="nav-fb">
         <svg viewBox="0 0 24 24" fill="#1877F2" width="16" height="16"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
         Facebook
       </a>
-      <a href="/skup" class="btn-nav">Sprzedaj książkę →</a>
+      <a href="/KulturaWraca/skup.html" class="btn-nav">Sprzedaj książkę →</a>
     </div>
   </div>
 </nav>`;
@@ -41,51 +41,51 @@ const FOOTER_HTML = `
       <div class="footer-contact">
         <a href="tel:+48511825915"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>511 825 915</a>
         <a href="mailto:sklepkulturawraca@gmail.com"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>sklepkulturawraca@gmail.com</a>
-        <a href="/kontakt"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>ul. Wrocławska 1/3, 63-400 Ostrów Wlkp.</a>
+        <a href="/KulturaWraca/kontakt.html"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>ul. Wrocławska 1/3, 63-400 Ostrów Wlkp.</a>
         <a href="https://facebook.com/kulturawraca" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>facebook.com/kulturawraca</a>
       </div>
     </div>
     <div class="footer-col">
       <h5>O skupie</h5>
-      <a href="/kim-jestesmy">Kim jesteśmy</a>
-      <a href="/jak-to-dziala">Jak to działa</a>
-      <a href="/jakich-nie-skupujemy">Jakich nie skupujemy</a>
-      <a href="/blog">Blog</a>
-      <a href="/kontakt">Kontakt</a>
+      <a href="/KulturaWraca/kim-jestesmy.html">Kim jesteśmy</a>
+      <a href="/KulturaWraca/jak-to-dziala.html">Jak to działa</a>
+      <a href="/KulturaWraca/jakich-nie-skupujemy.html">Jakich nie skupujemy</a>
+      <a href="/KulturaWraca/blog.html">Blog</a>
+      <a href="/KulturaWraca/kontakt.html">Kontakt</a>
     </div>
     <div class="footer-col">
       <h5>Sprzedaj</h5>
-      <a href="/skup">Zacznij wycenę</a>
-      <a href="/jak-to-dziala">Jak to działa</a>
-      <a href="/jakich-nie-skupujemy">Jakich nie skupujemy</a>
-      <a href="/regulamin">Regulamin</a>
-      <a href="/polityka-prywatnosci">Polityka prywatności</a>
+      <a href="/KulturaWraca/skup.html">Zacznij wycenę</a>
+      <a href="/KulturaWraca/jak-to-dziala.html">Jak to działa</a>
+      <a href="/KulturaWraca/jakich-nie-skupujemy.html">Jakich nie skupujemy</a>
+      <a href="/KulturaWraca/regulamin.html">Regulamin</a>
+      <a href="/KulturaWraca/polityka-prywatnosci.html">Polityka prywatności</a>
     </div>
     <div class="footer-col">
       <h5>Skupy regionalne</h5>
-      <a href="/skup-ksiazek-wroclaw">Skup książek Wrocław</a>
-      <a href="/skup-ksiazek-warszawa">Skup książek Warszawa</a>
-      <a href="/skup-ksiazek-krakow">Skup książek Kraków</a>
-      <a href="/skup-ksiazek-poznan">Skup książek Poznań</a>
-      <a href="/skup-ksiazek-gdansk">Skup książek Gdańsk</a>
-      <a href="/skup-ksiazek-lodz">Skup książek Łódź</a>
-      <a href="/skup-ksiazek-katowice">Skup książek Katowice</a>
-      <a href="/skup-ksiazek-walbrzych">Skup książek Wałbrzych</a>
-      <a href="/skup-ksiazek-jelenia-gora">Skup książek Jelenia Góra</a>
-      <a href="/skup-ksiazek-legnica">Skup książek Legnica</a>
-      <a href="/skup-ksiazek-zielona-gora">Skup książek Zielona Góra</a>
-      <a href="/skup-ksiazek-ostrow-wlkp">Skup książek Ostrów Wlkp.</a>
-      <a href="/skup-ksiazek-bydgoszcz">Skup książek Bydgoszcz</a>
-      <a href="/skup-ksiazek-szczecin">Skup książek Szczecin</a>
-      <a href="/skup-ksiazek-rzeszow">Skup książek Rzeszów</a>
-      <a href="/skup-ksiazek-lublin">Skup książek Lublin</a>
+      <a href="/KulturaWraca/skup-ksiazek-wroclaw.html">Skup książek Wrocław</a>
+      <a href="/KulturaWraca/skup-ksiazek-warszawa.html">Skup książek Warszawa</a>
+      <a href="/KulturaWraca/skup-ksiazek-krakow.html">Skup książek Kraków</a>
+      <a href="/KulturaWraca/skup-ksiazek-poznan.html">Skup książek Poznań</a>
+      <a href="/KulturaWraca/skup-ksiazek-gdansk.html">Skup książek Gdańsk</a>
+      <a href="/KulturaWraca/skup-ksiazek-lodz.html">Skup książek Łódź</a>
+      <a href="/KulturaWraca/skup-ksiazek-katowice.html">Skup książek Katowice</a>
+      <a href="/KulturaWraca/skup-ksiazek-walbrzych.html">Skup książek Wałbrzych</a>
+      <a href="/KulturaWraca/skup-ksiazek-jelenia-gora.html">Skup książek Jelenia Góra</a>
+      <a href="/KulturaWraca/skup-ksiazek-legnica.html">Skup książek Legnica</a>
+      <a href="/KulturaWraca/skup-ksiazek-zielona-gora.html">Skup książek Zielona Góra</a>
+      <a href="/KulturaWraca/skup-ksiazek-ostrow-wlkp.html">Skup książek Ostrów Wlkp.</a>
+      <a href="/KulturaWraca/skup-ksiazek-bydgoszcz.html">Skup książek Bydgoszcz</a>
+      <a href="/KulturaWraca/skup-ksiazek-szczecin.html">Skup książek Szczecin</a>
+      <a href="/KulturaWraca/skup-ksiazek-rzeszow.html">Skup książek Rzeszów</a>
+      <a href="/KulturaWraca/skup-ksiazek-lublin.html">Skup książek Lublin</a>
     </div>
   </div>
   <div class="footer-bottom">
     <p>© 2026 KulturaWraca | NIP: 8952249461 | skupujemykulture.pl — Wszystkie prawa zastrzeżone.</p>
     <div class="footer-bottom-links">
-      <a href="/regulamin">Regulamin</a>
-      <a href="/polityka-prywatnosci">Polityka prywatności</a>
+      <a href="/KulturaWraca/regulamin.html">Regulamin</a>
+      <a href="/KulturaWraca/polityka-prywatnosci.html">Polityka prywatności</a>
     </div>
   </div>
 </footer>`;
