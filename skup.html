@@ -267,14 +267,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--text);background:#F4F4F4;font-
 </div>
 
 <script>
-const DEMO_BOOKS = {
-  '9788308071236': {title:'Lalka',author:'Bolesław Prus',price:3.50,cover:'https://covers.openlibrary.org/b/isbn/9788308071236-M.jpg'},
-  '9788308073124': {title:'Pan Tadeusz',author:'Adam Mickiewicz',price:2.20,cover:''},
-  '9788377581100': {title:'Wiedźmin: Ostatnie życzenie',author:'Andrzej Sapkowski',price:5.80,cover:'https://covers.openlibrary.org/b/isbn/9788377581100-M.jpg'},
-  '9788320717588': {title:'Solaris',author:'Stanisław Lem',price:4.10,cover:''},
-  '9788373197756': {title:'Harry Potter i Kamień Filozoficzny',author:'J.K. Rowling',price:6.50,cover:'https://covers.openlibrary.org/b/isbn/9788373197756-M.jpg'},
-  '9780141439600': {title:'Pride and Prejudice',author:'Jane Austen',price:0,cover:''},
-};
+const BACKEND = 'https://kulturawraca-backend-production.up.railway.app';
 
 let books = [];
 
@@ -282,7 +275,7 @@ function clean(isbn){ return isbn.replace(/[-\s]/g,''); }
 
 function fmt(n){ return n.toFixed(2).replace('.',',') + ' zł'; }
 
-function addBook(){
+async function addBook(){
   const raw = document.getElementById('isbnInput').value.trim();
   const isbn = clean(raw);
   if(!isbn){ showError('Wpisz numer ISBN.'); return; }
@@ -292,27 +285,42 @@ function addBook(){
   showLoading(true);
   document.getElementById('addBtn').disabled = true;
 
-  setTimeout(()=>{
-    showLoading(false);
-    document.getElementById('addBtn').disabled = false;
-
+  try {
     const existing = books.find(b=>b.isbn===isbn);
-    if(existing){ existing.qty++; render(); document.getElementById('isbnInput').value=''; return; }
-
-    const demo = DEMO_BOOKS[isbn];
-    if(demo){
-      if(demo.price === 0){ showError('Tej książki nie skupujemy — zbyt niski popyt lub zła kategoria.'); return; }
-      books.push({isbn, title:demo.title, author:demo.author, price:demo.price, cover:demo.cover, qty:1});
-    } else {
-      // Symulacja nieznanej książki z losową ceną
-      const prices = [1.20,2.50,3.80,4.40,0,5.20,1.80];
-      const p = prices[Math.floor(Math.random()*prices.length)];
-      if(p===0){ showError('Tej książki nie skupujemy — zbyt niski popyt lub zła kategoria.'); return; }
-      books.push({isbn, title:'Tytuł książki (ISBN: '+raw+')', author:'', price:p, cover:'', qty:1});
+    if(existing){
+      existing.qty++;
+      render();
+      document.getElementById('isbnInput').value='';
+      return;
     }
+
+    const response = await fetch(`${BACKEND}/api/wycena/${isbn}`);
+    const data = await response.json();
+
+    if(!data.found || data.price === 0){
+      showError(data.reason || 'Tej pozycji nie skupujemy.');
+      return;
+    }
+
+    books.push({
+      isbn,
+      title: data.title || 'ISBN: ' + raw,
+      author: data.author || '',
+      price: data.price,
+      cover: data.cover || '',
+      qty: 1
+    });
+
     document.getElementById('isbnInput').value = '';
     render();
-  }, 900);
+
+  } catch(err) {
+    showError('Błąd połączenia z serwerem. Spróbuj ponownie.');
+    console.error(err);
+  } finally {
+    showLoading(false);
+    document.getElementById('addBtn').disabled = false;
+  }
 }
 
 function setCondition(isbn, condition){
