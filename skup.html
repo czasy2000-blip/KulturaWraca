@@ -450,47 +450,42 @@ function startCamera(){
   document.getElementById('scannerStatus').textContent = 'Uruchamiam kamerę...';
   try {
     codeReader = new ZXing.BrowserMultiFormatReader();
-    // Hints for faster barcode detection
-    const hints = new Map();
-    hints.set(ZXing.DecodeHintType.POSSIBLE_FORMATS, [
-      ZXing.BarcodeFormat.EAN_13,
-      ZXing.BarcodeFormat.EAN_8,
-      ZXing.BarcodeFormat.CODE_128,
-    ]);
-    hints.set(ZXing.DecodeHintType.TRY_HARDER, true);
-    codeReader.hints = hints;
 
-    // Prefer back camera on mobile
-    ZXing.BrowserCodeReader.listVideoInputDevices().then(devices => {
-      const backCam = devices.find(d => /back|rear|environment/i.test(d.label)) || devices[devices.length - 1];
-      const deviceId = backCam ? backCam.deviceId : undefined;
+    // First request camera permission explicitly
+    navigator.mediaDevices.getUserMedia({
+      video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } }
+    }).then(stream => {
+      // Stop this stream — ZXing will start its own
+      stream.getTracks().forEach(t => t.stop());
+
+      // Now start ZXing with back camera
+      return ZXing.BrowserCodeReader.listVideoInputDevices();
+    }).then(devices => {
+      const backCam = devices.find(d => /back|rear|environment/i.test(d.label));
+      const deviceId = backCam ? backCam.deviceId : (devices.length ? devices[devices.length-1].deviceId : undefined);
 
       codeReader.decodeFromVideoDevice(deviceId, 'scannerVideo', (result, err) => {
         if(result){
           const text = result.getText().replace(/[^0-9]/g,'');
           if(text.length >= 10){
             closeScanner();
-            // Format as ISBN
             let fmt = '';
             for(let i=0;i<text.length&&i<13;i++){
               if(i===3||i===5||i===11) fmt+='-';
               fmt+=text[i];
             }
             document.getElementById('isbnInput').value = fmt;
-            document.getElementById('scannerStatus').textContent = 'Zeskanowano: ' + fmt;
             setTimeout(()=>addBook(), 200);
           }
         }
-        if(err && !(err instanceof ZXing.NotFoundException)){
-          // ignore not found errors
-        }
       });
-      document.getElementById('scannerStatus').textContent = 'Przyłóż kod kreskowy do kamery';
-    }).catch(()=>{
-      document.getElementById('scannerStatus').textContent = 'Brak kamery. Wpisz ISBN ręcznie.';
+      document.getElementById('scannerStatus').textContent = 'Przyłóż kod kreskowy do kamery 📷';
+    }).catch(err => {
+      document.getElementById('scannerStatus').textContent = 'Brak dostępu do kamery — sprawdź uprawnienia.';
+      console.error(err);
     });
   } catch(e) {
-    document.getElementById('scannerStatus').textContent = 'Brak dostępu do kamery.';
+    document.getElementById('scannerStatus').textContent = 'Błąd kamery: ' + e.message;
   }
 }
 
