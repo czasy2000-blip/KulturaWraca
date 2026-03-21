@@ -416,81 +416,82 @@ document.getElementById('isbnInput').addEventListener('input',function(){
 </script>
 <!-- SCANNER MODAL -->
 <div id="scannerOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:999;align-items:center;justify-content:center;flex-direction:column;">
-  <div style="background:#fff;border-radius:16px;padding:1.5rem;max-width:360px;width:90%;text-align:center;">
+  <div style="background:#fff;border-radius:16px;padding:1.5rem;max-width:380px;width:92%;text-align:center;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
       <div>
         <h3 style="font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;color:#1C1C1C;">Skanuj kod ISBN</h3>
         <p style="font-size:12px;color:#6B6B6B;margin-top:2px;">Przyłóż kamerę do tylnej okładki</p>
       </div>
-      <button onclick="closeScanner()" style="width:32px;height:32px;border:none;background:#F0F0F0;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;">✕</button>
+      <button onclick="closeScanner()" style="width:32px;height:32px;border:none;background:#F0F0F0;border-radius:50%;cursor:pointer;font-size:16px;">✕</button>
     </div>
-    <div style="position:relative;border-radius:12px;overflow:hidden;background:#000;">
-      <video id="scannerVideo" style="width:100%;height:260px;object-fit:cover;display:block;" playsinline></video>
-      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;">
-        <div style="width:220px;height:100px;border:2px solid #7A1E2E;border-radius:8px;box-shadow:0 0 0 999px rgba(0,0,0,.4);"></div>
-      </div>
-    </div>
-    <div id="scannerStatus" style="margin-top:12px;font-size:12px;color:#6B6B6B;font-family:'DM Sans',sans-serif;">Szukam kodu kreskowego...</div>
+    <div id="qr-reader" style="width:100%;border-radius:10px;overflow:hidden;"></div>
+    <div id="scannerStatus" style="margin-top:10px;font-size:12px;color:#6B6B6B;font-family:'DM Sans',sans-serif;">Uruchamiam kamerę...</div>
     <button onclick="closeScanner()" style="margin-top:12px;width:100%;background:#F0F0F0;border:none;border-radius:8px;padding:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">Anuluj</button>
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@zxing/library@0.19.1/umd/index.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <script>
-let codeReader = null;
+let html5Scanner = null;
 
 function openScanner(){
-  const overlay = document.getElementById('scannerOverlay');
-  overlay.style.display = 'flex';
+  document.getElementById('scannerOverlay').style.display = 'flex';
   document.body.style.overflow = 'hidden';
-  startCamera();
-}
-
-function startCamera(){
   document.getElementById('scannerStatus').textContent = 'Uruchamiam kamerę...';
-  try {
-    codeReader = new ZXing.BrowserMultiFormatReader();
 
-    // First request camera permission explicitly
-    navigator.mediaDevices.getUserMedia({
-      video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } }
-    }).then(stream => {
-      // Stop this stream — ZXing will start its own
-      stream.getTracks().forEach(t => t.stop());
+  html5Scanner = new Html5Qrcode('qr-reader');
 
-      // Now start ZXing with back camera
-      return ZXing.BrowserCodeReader.listVideoInputDevices();
-    }).then(devices => {
-      const backCam = devices.find(d => /back|rear|environment/i.test(d.label));
-      const deviceId = backCam ? backCam.deviceId : (devices.length ? devices[devices.length-1].deviceId : undefined);
+  const config = {
+    fps: 15,
+    qrbox: { width: 280, height: 120 },
+    aspectRatio: 1.5,
+    supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
+    experimentalFeatures: { useBarCodeDetectorIfSupported: true }
+  };
 
-      codeReader.decodeFromVideoDevice(deviceId, 'scannerVideo', (result, err) => {
-        if(result){
-          const text = result.getText().replace(/[^0-9]/g,'');
-          if(text.length >= 10){
-            closeScanner();
-            let fmt = '';
-            for(let i=0;i<text.length&&i<13;i++){
-              if(i===3||i===5||i===11) fmt+='-';
-              fmt+=text[i];
-            }
-            document.getElementById('isbnInput').value = fmt;
-            setTimeout(()=>addBook(), 200);
+  Html5Qrcode.getCameras().then(cameras => {
+    if(!cameras || cameras.length === 0){
+      document.getElementById('scannerStatus').textContent = 'Brak kamery w urządzeniu.';
+      return;
+    }
+    // Prefer back camera
+    const cam = cameras.find(c => /back|rear|environment/i.test(c.label)) || cameras[cameras.length - 1];
+
+    html5Scanner.start(
+      cam.id,
+      config,
+      (decodedText) => {
+        const clean = decodedText.replace(/[^0-9]/g, '');
+        if(clean.length >= 10){
+          closeScanner();
+          let fmt = '';
+          for(let i = 0; i < clean.length && i < 13; i++){
+            if(i===3||i===5||i===11) fmt += '-';
+            fmt += clean[i];
           }
+          document.getElementById('isbnInput').value = fmt;
+          document.getElementById('scannerStatus').textContent = 'Zeskanowano!';
+          setTimeout(() => addBook(), 200);
         }
-      });
-      document.getElementById('scannerStatus').textContent = 'Przyłóż kod kreskowy do kamery 📷';
+      },
+      () => { /* ignore decode errors */ }
+    ).then(() => {
+      document.getElementById('scannerStatus').textContent = 'Przyłóż kod kreskowy 📷';
     }).catch(err => {
-      document.getElementById('scannerStatus').textContent = 'Brak dostępu do kamery — sprawdź uprawnienia.';
-      console.error(err);
+      document.getElementById('scannerStatus').textContent = 'Błąd kamery: ' + err;
     });
-  } catch(e) {
-    document.getElementById('scannerStatus').textContent = 'Błąd kamery: ' + e.message;
-  }
+  }).catch(() => {
+    document.getElementById('scannerStatus').textContent = 'Brak dostępu do kamery — sprawdź uprawnienia.';
+  });
 }
 
 function closeScanner(){
-  if(codeReader){ try{ codeReader.reset(); }catch(e){} codeReader = null; }
+  if(html5Scanner){
+    html5Scanner.stop().catch(()=>{}).finally(()=>{
+      html5Scanner.clear();
+      html5Scanner = null;
+    });
+  }
   document.getElementById('scannerOverlay').style.display = 'none';
   document.body.style.overflow = '';
 }
@@ -499,12 +500,9 @@ document.getElementById('scannerOverlay').addEventListener('click', function(e){
   if(e.target === this) closeScanner();
 });
 
-// Handle URL params — ?scan=1 or ?isbn=XXX
 window.addEventListener('load', function(){
   const params = new URLSearchParams(location.search);
-  if(params.get('scan') === '1'){
-    setTimeout(openScanner, 500);
-  }
+  if(params.get('scan') === '1') setTimeout(openScanner, 600);
   if(params.get('isbn')){
     document.getElementById('isbnInput').value = params.get('isbn');
     setTimeout(addBook, 300);
