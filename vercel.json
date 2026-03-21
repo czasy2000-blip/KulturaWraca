@@ -1,4 +1,114 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/skup",
+      "destination": "/skup.html"
+    },
+    {
+      "source": "/dane",
+      "destination": "/dane.html"
+    },
+    {
+      "source": "/podsumowanie",
+      "destination": "/podsumowanie.html"
+    },
+    {
+      "source": "/jak-to-dziala",
+      "destination": "/jak-to-dziala.html"
+    },
+    {
+      "source": "/kim-jestesmy",
+      "destination": "/kim-jestesmy.html"
+    },
+    {
+      "source": "/kontakt",
+      "destination": "/kontakt.html"
+    },
+    {
+      "source": "/jakich-nie-skupujemy",
+      "destination": "/jakich-nie-skupujemy.html"
+    },
+    {
+      "source": "/regulamin",
+      "destination": "/regulamin.html"
+    },
+    {
+      "source": "/polityka-prywatnosci",
+      "destination": "/polityka-prywatnosci.html"
+    },
+    {
+      "source": "/blog",
+      "destination": "/blog.html"
+    },
+    {
+      "source": "/skup-ksiazek-wroclaw",
+      "destination": "/skup-ksiazek-wroclaw.html"
+    },
+    {
+      "source": "/skup-ksiazek-warszawa",
+      "destination": "/skup-ksiazek-warszawa.html"
+    },
+    {
+      "source": "/skup-ksiazek-krakow",
+      "destination": "/skup-ksiazek-krakow.html"
+    },
+    {
+      "source": "/skup-ksiazek-poznan",
+      "destination": "/skup-ksiazek-poznan.html"
+    },
+    {
+      "source": "/skup-ksiazek-gdansk",
+      "destination": "/skup-ksiazek-gdansk.html"
+    },
+    {
+      "source": "/skup-ksiazek-lodz",
+      "destination": "/skup-ksiazek-lodz.html"
+    },
+    {
+      "source": "/skup-ksiazek-katowice",
+      "destination": "/skup-ksiazek-katowice.html"
+    },
+    {
+      "source": "/skup-ksiazek-walbrzych",
+      "destination": "/skup-ksiazek-walbrzych.html"
+    },
+    {
+      "source": "/skup-ksiazek-jelenia-gora",
+      "destination": "/skup-ksiazek-jelenia-gora.html"
+    },
+    {
+      "source": "/skup-ksiazek-legnica",
+      "destination": "/skup-ksiazek-legnica.html"
+    },
+    {
+      "source": "/skup-ksiazek-zielona-gora",
+      "destination": "/skup-ksiazek-zielona-gora.html"
+    },
+    {
+      "source": "/skup-ksiazek-ostrow-wlkp",
+      "destination": "/skup-ksiazek-ostrow-wlkp.html"
+    },
+    {
+      "source": "/skup-ksiazek-bydgoszcz",
+      "destination": "/skup-ksiazek-bydgoszcz.html"
+    },
+    {
+      "source": "/skup-ksiazek-szczecin",
+      "destination": "/skup-ksiazek-szczecin.html"
+    },
+    {
+      "source": "/skup-ksiazek-rzeszow",
+      "destination": "/skup-ksiazek-rzeszow.html"
+    },
+    {
+      "source": "/skup-ksiazek-lublin",
+      "destination": "/skup-ksiazek-lublin.html"
+    }
+  ]
 }
