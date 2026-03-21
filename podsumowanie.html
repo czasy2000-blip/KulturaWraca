@@ -135,19 +135,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--text);background:#F4F4F4;font-
 </head>
 <body>
 
-<nav class="nav">
-  <div class="nav-inner">
-    <a href="index.html" class="logo">
-      <div class="logo-icon">
-        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-      </div>
-      <div>
-        <div class="logo-name"><span>Kultura</span>Wraca</div>
-        <div class="logo-sub">Skup książek online</div>
-      </div>
-    </a>
-  </div>
-</nav>
+<div id="nav-placeholder"></div>
 
 <div class="stepper-wrap">
   <div class="stepper">
@@ -363,7 +351,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--text);background:#F4F4F4;font-
       <h4>❓ Pytania?</h4>
       <div style="font-size:12px;color:var(--muted);line-height:1.8;">
         <div>📞 <a href="tel:+48511825915" style="color:var(--red);text-decoration:none;">511 825 915</a></div>
-        <div>✉ <a href="/cdn-cgi/l/email-protection#fa8991969f8a918f968e8f889b8d889b999bba9d979b9396d4999597" style="color:var(--red);text-decoration:none;font-size:11px;"><span class="__cf_email__" data-cfemail="681b03040d18031d041c1d1a091f1a090b09280f05090104460b0705">[email&#160;protected]</span></a></div>
+        <div>✉ <a href="mailto:sklepkulturawraca@gmail.com" style="color:var(--red);text-decoration:none;font-size:11px;">sklepkulturawraca@gmail.com</a></div>
         <div style="color:var(--light);font-size:11px;margin-top:4px;">Pon–Pt 8:00–16:00</div>
       </div>
     </div>
@@ -388,7 +376,18 @@ body{font-family:'DM Sans',sans-serif;color:var(--text);background:#F4F4F4;font-
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 function submitOrder(){
   const t1 = document.getElementById('terms1').checked;
-  const t2 = document.getElemen
+  const t2 = document.getElementById('terms2').checked;
+  if(!t1||!t2){
+    alert('Zaznacz wymagane zgody, żeby złożyć zamówienie.');
+    return;
+  }
+  document.getElementById('successOverlay').style.display='flex';
+  document.body.style.overflow='hidden';
+}
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

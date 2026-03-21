@@ -142,19 +142,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--text);background:#F4F4F4;font-
 </head>
 <body>
 
-<nav class="nav">
-  <div class="nav-inner">
-    <a href="index.html" class="logo">
-      <div class="logo-icon">
-        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-      </div>
-      <div>
-        <div class="logo-name"><span>Kultura</span>Wraca</div>
-        <div class="logo-sub">Skup książek online</div>
-      </div>
-    </a>
-  </div>
-</nav>
+<div id="nav-placeholder"></div>
 
 <div class="stepper-wrap">
   <div class="stepper">
@@ -392,13 +380,13 @@ body{font-family:'DM Sans',sans-serif;color:var(--text);background:#F4F4F4;font-
     <div class="info-card">
       <h4>❓ Masz pytania?</h4>
       <div class="info-item"><div class="info-dot"></div><span>📞 511 825 915</span></div>
-      <div class="info-item"><div class="info-dot"></div><span>✉ <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="aad9c1c6cfdac1dfc6dedfd8cbddd8cbc9cbeacdc7cbc3c684c9c5c7">[email&#160;protected]</a></span></div>
+      <div class="info-item"><div class="info-dot"></div><span>✉ sklepkulturawraca@gmail.com</span></div>
       <div class="info-item"><div class="info-dot"></div><span>Pon–Pt 8:00–16:00</span></div>
     </div>
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 function selectShip(type){
   document.getElementById('optDHL').classList.toggle('selected', type==='dhl');
   document.getElementById('optInpost').classList.toggle('selected', type==='inpost');
@@ -417,4 +405,13 @@ document.getElementById('ibanInput').addEventListener('input',function(){
 });
 
 function handleGoogleLogin(){
-  alert('Tu nastąpi przekierowanie do logowania przez Google (OAuth
+  alert('Tu nastąpi przekierowanie do logowania przez Google (OAuth 2.0).\nPo zalogowaniu formularz wypełni się automatycznie imieniem i emailem.');
+}
+
+function goToSummary(){
+  alert('Tu nastąpi walidacja formularza i przejście do kroku 3 — podsumowania zamówienia.');
+}
+</script>
+<script src="nav.js"></script>
+</body>
+</html>
