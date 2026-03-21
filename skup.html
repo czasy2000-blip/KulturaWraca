@@ -201,7 +201,10 @@ body{font-family:'DM Sans',sans-serif;color:var(--text);background:#F4F4F4;font-
           </div>
           <button class="isbn-add" id="addBtn" onclick="addBook()">Dodaj</button>
         </div>
-        <a class="isbn-sub" href="#" onclick="addNoISBN(); return false;">+ Dodaj książkę bez numeru ISBN</a>
+        <div style="display:flex;justify-content:space-between;margin-top:8px;">
+          <a class="isbn-sub" href="#" onclick="addNoISBN(); return false;">+ Dodaj książkę bez numeru ISBN</a>
+          <a class="isbn-sub" href="/KulturaWraca/pomoc.html">? Gdzie znajdę numer ISBN?</a>
+        </div>
       </div>
 
       <div class="loading-row" id="loadingRow">
@@ -224,6 +227,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--text);background:#F4F4F4;font-
               <th style="width:52px;"></th>
               <th>Tytuł</th>
               <th style="width:80px;">Ilość</th>
+              <th style="width:150px;">Stan</th>
               <th style="width:90px;">Wycena</th>
               <th style="width:40px;"></th>
             </tr>
@@ -329,6 +333,20 @@ function addBook(){
   }, 900);
 }
 
+function setCondition(isbn, condition){
+  const b = books.find(b=>b.isbn===isbn);
+  if(b) b.condition = condition;
+}
+
+function getConditionDesc(condition){
+  const desc = {
+    'nowy': 'Bez śladów użytkowania',
+    'bardzo_dobry': 'Drobne ślady użytkowania',
+    'dobry': 'Widoczne ślady użytkowania'
+  };
+  return desc[condition] || '';
+}
+
 function removeBook(isbn){ books = books.filter(b=>b.isbn!==isbn); render(); }
 function changeQty(isbn, d){
   const b = books.find(b=>b.isbn===isbn);
@@ -358,7 +376,7 @@ function render(){
       </td>
       <td>
         <div class="book-title">${b.title}</div>
-        <div class="book-isbn">${b.author ? b.author+' · ' : ''}ISBN: ${b.isbn}</div>
+        <div class="book-isbn">${b.author ? b.author+' · ' : ''}${b.noIsbn ? 'Bez ISBN' : 'ISBN: '+b.isbn}</div>
       </td>
       <td>
         <div class="qty-ctrl">
@@ -366,6 +384,14 @@ function render(){
           <span class="qty-val">${b.qty}</span>
           <button class="qty-btn" onclick="changeQty('${b.isbn}',1)">+</button>
         </div>
+      </td>
+      <td>
+        <select onchange="setCondition('${b.isbn}', this.value)" style="border:1px solid #E0E0E0;border-radius:6px;padding:5px 8px;font-size:12px;color:#1C1C1C;background:#fff;font-family:'DM Sans',sans-serif;cursor:pointer;width:100%;">
+          <option value="nowy" ${(b.condition||'nowy')==='nowy'?'selected':''}>Nowy</option>
+          <option value="bardzo_dobry" ${(b.condition||'')==='bardzo_dobry'?'selected':''}>Bardzo dobry</option>
+          <option value="dobry" ${(b.condition||'')==='dobry'?'selected':''}>Dobry</option>
+        </select>
+        <div style="font-size:10px;color:#999;margin-top:3px;">${getConditionDesc(b.condition||'nowy')}</div>
       </td>
       <td><span class="book-price">${fmt(b.price * b.qty)}</span><br><span style="font-size:10px;color:var(--light)">${fmt(b.price)}/szt.</span></td>
       <td>
