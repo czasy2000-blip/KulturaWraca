@@ -7,7 +7,7 @@ const NAV_HTML = `
       </div>
       <div>
         <div class="logo-name"><span>Kultura</span>Wraca</div>
-        <div class="logo-sub">Skup książek online</div>
+        <div class="logo-sub">Skup książek, płyt i winyli</div>
       </div>
     </a>
     <ul class="nav-links">
