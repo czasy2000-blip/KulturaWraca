@@ -201,7 +201,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--text);background:#F4F4F4;font-
           </div>
           <button class="isbn-add" id="addBtn" onclick="addBook()">Dodaj</button>
         </div>
-        <a class="isbn-sub" href="#" onclick="addNoISBN(); return false;">+ Dodaj książkę bez numeru ISBN <span style="color:#888;font-weight:400;">(wycena: 0,10 zł/szt.)</span></a>
+        <a class="isbn-sub" href="#" onclick="addNoISBN(); return false;">+ Dodaj książkę bez numeru ISBN</a>
       </div>
 
       <div class="loading-row" id="loadingRow">
@@ -408,7 +408,20 @@ function addNoISBN(){
   document.body.style.overflow = 'hidden';
 }
 
-function closeNoIsbnModal(){
+function previewPhoto(input){
+  const file = input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById('photoPreview').src = e.target.result;
+    document.getElementById('photoPreview').style.display = 'block';
+    document.getElementById('photoText').textContent = '✓ Zdjęcie dodane — ' + file.name;
+    document.getElementById('photoLabel').style.borderColor = '#7A1E2E';
+  };
+  reader.readAsDataURL(file);
+}
+
+
   document.getElementById('noIsbnModal').style.display = 'none';
   document.body.style.overflow = '';
   document.getElementById('noIsbnForm').reset();
@@ -455,38 +468,53 @@ document.getElementById('isbnInput').addEventListener('input',function(){
 });
 </script>
 <!-- NO ISBN MODAL -->
-<div id="noIsbnModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:999;align-items:center;justify-content:center;padding:1rem;">
-  <div style="background:#fff;border-radius:14px;padding:1.75rem;max-width:440px;width:100%;">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;">
+<div id="noIsbnModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:999;align-items:center;justify-content:center;padding:1rem;overflow-y:auto;">
+  <div style="background:#fff;border-radius:14px;padding:1.75rem;max-width:440px;width:100%;margin:auto;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;">
       <div>
         <h3 style="font-size:16px;font-weight:700;color:#1C1C1C;font-family:'DM Sans',sans-serif;">Dodaj książkę bez ISBN</h3>
-        <p style="font-size:12px;color:#888;margin-top:3px;">Wycena: <strong>0,10 zł za sztukę</strong></p>
+        <p style="font-size:11px;color:#888;margin-top:3px;">Dotyczy wyłącznie książek — nie płyt, winyli ani DVD</p>
       </div>
-      <button onclick="closeNoIsbnModal()" style="width:30px;height:30px;border:none;background:#F0F0F0;border-radius:50%;cursor:pointer;font-size:15px;">✕</button>
+      <button onclick="closeNoIsbnModal()" style="width:30px;height:30px;border:none;background:#F0F0F0;border-radius:50%;cursor:pointer;font-size:15px;flex-shrink:0;">✕</button>
     </div>
+
+    <div style="background:#F9F0F2;border:1px solid #E8D0D4;border-radius:8px;padding:9px 12px;font-size:12px;color:#7A1E2E;margin-bottom:1rem;line-height:1.5;">
+      ⚠ Ta opcja dotyczy tylko <strong>książek bez kodu kreskowego</strong>. Płyty audio, winyle i DVD muszą mieć kod EAN — wpisz go w główne pole.
+    </div>
+
     <form id="noIsbnForm" onsubmit="event.preventDefault();submitNoIsbn();">
       <div style="display:flex;flex-direction:column;gap:12px;">
+
+        <div style="display:flex;flex-direction:column;gap:5px;">
+          <label style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#999;">Zdjęcie okładki / strony tytułowej <span style="color:#bbb;font-weight:400;">(opcjonalne)</span></label>
+          <label id="photoLabel" style="border:1.5px dashed #DDD;border-radius:8px;padding:14px;text-align:center;cursor:pointer;color:#999;font-size:13px;font-family:'DM Sans',sans-serif;transition:border-color .2s;">
+            <input id="niPhoto" type="file" accept="image/*" capture="environment" style="display:none;" onchange="previewPhoto(this)"/>
+            <span id="photoText">📷 Dodaj zdjęcie okładki</span>
+          </label>
+          <img id="photoPreview" style="display:none;width:100%;max-height:160px;object-fit:cover;border-radius:8px;border:1px solid #EEE;"/>
+        </div>
+
         <div style="display:flex;flex-direction:column;gap:5px;">
           <label style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#999;">Tytuł książki *</label>
-          <input id="niTitle" type="text" placeholder="np. Chłopi" style="border:1.5px solid #E0E0E0;border-radius:8px;padding:0 14px;height:42px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;" required/>
+          <input id="niTitle" type="text" placeholder="np. Historia sztuki polskiej" style="border:1.5px solid #E0E0E0;border-radius:8px;padding:0 14px;height:42px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;" required/>
         </div>
+
         <div style="display:flex;flex-direction:column;gap:5px;">
           <label style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#999;">Autor *</label>
-          <input id="niAuthor" type="text" placeholder="np. Władysław Reymont" style="border:1.5px solid #E0E0E0;border-radius:8px;padding:0 14px;height:42px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;" required/>
+          <input id="niAuthor" type="text" placeholder="np. Jan Nowak" style="border:1.5px solid #E0E0E0;border-radius:8px;padding:0 14px;height:42px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;" required/>
         </div>
+
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
           <div style="display:flex;flex-direction:column;gap:5px;">
             <label style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#999;">Rok wydania *</label>
-            <input id="niYear" type="number" placeholder="np. 1952" min="1400" max="2025" style="border:1.5px solid #E0E0E0;border-radius:8px;padding:0 14px;height:42px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;" required/>
+            <input id="niYear" type="number" placeholder="np. 1987" min="1400" max="2025" style="border:1.5px solid #E0E0E0;border-radius:8px;padding:0 14px;height:42px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;" required/>
           </div>
           <div style="display:flex;flex-direction:column;gap:5px;">
             <label style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#999;">Wydawnictwo</label>
-            <input id="niPublisher" type="text" placeholder="np. PIW" style="border:1.5px solid #E0E0E0;border-radius:8px;padding:0 14px;height:42px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;"/>
+            <input id="niPublisher" type="text" placeholder="np. PPWK" style="border:1.5px solid #E0E0E0;border-radius:8px;padding:0 14px;height:42px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;"/>
           </div>
         </div>
-        <div style="background:#FFF8F0;border:1px solid #FDDEB8;border-radius:8px;padding:10px 12px;font-size:12px;color:#7A5020;line-height:1.6;">
-          ℹ Książki bez numeru ISBN przyjmujemy po <strong>0,10 zł za sztukę</strong>. Podaj tytuł, autora i rok wydania — sprawdzimy pozycję w naszej bazie i jeśli się kwalifikuje, możemy zaproponować wyższą cenę.
-        </div>
+
         <button type="submit" style="background:#7A1E2E;color:#fff;border:none;border-radius:8px;padding:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:4px;">Dodaj do listy →</button>
       </div>
     </form>
