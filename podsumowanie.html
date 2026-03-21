@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Podsumowanie zamówienia — KulturaWraca</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#7A1E2E;--red-dark:#5C1522;--red-light:#F9F0F2;--red-border:#E8D0D4;
+  --gold:#C9963A;--text:#1C1C1C;--muted:#6B6B6B;--light:#9A9A9A;
+  --border:#E8E8E8;--soft:#FAFAFA;--navy:#1A2A3A;
+  --green:#1A7A3C;--green-light:#EDF7F1;--green-border:#B8DEC8;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;color:var(--text);background:#F4F4F4;font-size:15px;}
+
+.nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2rem;position:sticky;top:0;z-index:100;}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:62px;}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-icon{width:36px;height:36px;background:var(--red);border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.logo-icon svg{width:20px;height:20px;stroke:#fff;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.logo-name{font-family:'DM Serif Display',serif;font-size:17px;color:var(--text);}
+.logo-name span{color:var(--red);}
+.logo-sub{font-size:10px;color:var(--light);margin-top:-1px;}
+
+.stepper-wrap{background:#fff;border-bottom:1px solid var(--border);padding:1rem 2rem;}
+.stepper{max-width:700px;margin:0 auto;display:flex;align-items:center;}
+.st{display:flex;align-items:center;gap:8px;flex:1;}
+.st-num{width:28px;height:28px;border-radius:50%;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.st-num.done{background:var(--green);}
+.st-num.active{background:var(--red);}
+.st-label{font-size:12px;font-weight:600;}
+.st-label.done{color:var(--green);}
+.st-label.active{color:var(--red);}
+.st-line{flex:1;height:1px;margin:0 8px;}
+.st-line.done{background:var(--green);}
+.st-line.todo{background:var(--border);}
+
+.page{max-width:1100px;margin:1.5rem auto;padding:0 2rem;display:grid;grid-template-columns:1fr 320px;gap:1.5rem;align-items:start;}
+
+.card{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:1.25rem;}
+.card-head{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.card-head h2{font-family:'DM Serif Display',serif;font-size:17px;color:var(--text);}
+.card-head a{font-size:12px;color:var(--red);text-decoration:none;font-weight:500;}
+.card-head a:hover{text-decoration:underline;}
+.card-body{padding:1.25rem 1.5rem;}
+
+/* SUMMARY ROWS */
+.sum-section{margin-bottom:1.5rem;}
+.sum-section:last-child{margin-bottom:0;}
+.sum-section-title{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--light);margin-bottom:10px;}
+.sum-row{display:flex;gap:1rem;padding:7px 0;border-bottom:1px solid var(--border);align-items:flex-start;}
+.sum-row:last-child{border-bottom:none;}
+.sum-key{font-size:13px;color:var(--muted);width:140px;flex-shrink:0;}
+.sum-val{font-size:13px;color:var(--text);font-weight:500;flex:1;line-height:1.5;}
+.sum-badge{display:inline-flex;align-items:center;gap:5px;background:var(--soft);border:1px solid var(--border);border-radius:5px;padding:3px 10px;font-size:12px;font-weight:600;color:var(--text);}
+.dhl-badge{background:#FFCC00;color:#D40511;font-weight:900;font-size:12px;padding:2px 7px;border-radius:4px;}
+.inpost-badge{background:#FFD200;color:#1A1A1A;font-weight:900;font-size:12px;padding:2px 7px;border-radius:4px;}
+
+/* BOOKS TABLE */
+.books-sum{width:100%;border-collapse:collapse;}
+.books-sum th{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--light);padding:8px 12px;text-align:left;border-bottom:1px solid var(--border);background:var(--soft);}
+.books-sum td{padding:10px 12px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:middle;}
+.books-sum tr:last-child td{border-bottom:none;}
+.book-cover-sm{width:30px;height:42px;background:#F0F0F0;border-radius:3px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:13px;}
+.book-title-sm{font-weight:600;color:var(--text);font-size:13px;}
+.book-isbn-sm{font-size:11px;color:var(--light);}
+.price-green{font-weight:700;color:var(--green);}
+
+/* TOTAL BAR */
+.total-bar{background:var(--green-light);border:1px solid var(--green-border);border-radius:10px;padding:1rem 1.25rem;display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;}
+.total-bar-left p{font-size:12px;color:var(--green);margin-bottom:2px;}
+.total-bar-left strong{font-family:'DM Serif Display',serif;font-size:22px;color:var(--green);}
+.total-bar-right{text-align:right;font-size:12px;color:var(--green);}
+.total-bar-right p{margin-bottom:2px;}
+
+/* TERMS */
+.terms-wrap{padding:1.25rem 1.5rem;border-top:1px solid var(--border);background:var(--soft);}
+.checkbox-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;cursor:pointer;}
+.checkbox-row:last-child{margin-bottom:0;}
+.checkbox-row input[type=checkbox]{width:16px;height:16px;accent-color:var(--red);flex-shrink:0;margin-top:2px;cursor:pointer;}
+.checkbox-row span{font-size:12px;color:var(--muted);line-height:1.6;}
+.checkbox-row a{color:var(--red);text-decoration:none;}
+.checkbox-row a:hover{text-decoration:underline;}
+
+/* SUBMIT */
+.submit-area{padding:1.25rem 1.5rem;border-top:1px solid var(--border);background:#fff;display:flex;justify-content:space-between;align-items:center;}
+.back-btn{background:#fff;color:var(--text);border:1.5px solid var(--border);border-radius:8px;padding:11px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block;transition:all .2s;}
+.back-btn:hover{border-color:var(--red);color:var(--red);}
+.submit-btn{background:var(--red);color:#fff;border:none;border-radius:8px;padding:13px 32px;font-size:15px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;display:flex;align-items:center;gap:8px;}
+.submit-btn:hover{background:var(--red-dark);}
+.submit-btn svg{width:16px;height:16px;stroke:#fff;stroke-width:2.5;fill:none;}
+
+/* SUCCESS OVERLAY */
+.success-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;display:none;align-items:center;justify-content:center;padding:2rem;}
+.success-box{background:#fff;border-radius:16px;max-width:500px;width:100%;padding:2.5rem;text-align:center;animation:popIn .4s cubic-bezier(.175,.885,.32,1.275);}
+@keyframes popIn{from{opacity:0;transform:scale(.85);}to{opacity:1;transform:scale(1);}}
+.success-icon{width:70px;height:70px;background:var(--green-light);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;}
+.success-icon svg{width:36px;height:36px;stroke:var(--green);stroke-width:2;fill:none;}
+.success-box h2{font-family:'DM Serif Display',serif;font-size:24px;color:var(--text);margin-bottom:8px;}
+.success-box p{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:1.5rem;}
+.success-steps{background:var(--soft);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;text-align:left;}
+.success-step{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;font-size:13px;color:var(--text);line-height:1.5;}
+.success-step:last-child{margin-bottom:0;}
+.ss-num{width:22px;height:22px;border-radius:50%;background:var(--red);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.success-btn{background:var(--red);color:#fff;border:none;border-radius:8px;padding:12px 28px;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;width:100%;}
+
+/* SIDEBAR */
+.sidebar{display:flex;flex-direction:column;gap:1rem;}
+.side-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.25rem;}
+.side-card h4{font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.side-row{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px solid var(--border);}
+.side-row:last-child{border-bottom:none;}
+.side-row span:first-child{color:var(--muted);}
+.side-row span:last-child{font-weight:600;}
+.side-total{display:flex;justify-content:space-between;padding-top:10px;margin-top:4px;border-top:2px solid var(--border);}
+.side-total span:first-child{font-size:13px;font-weight:700;}
+.side-total span:last-child{font-size:18px;font-weight:700;color:var(--green);}
+.timeline{display:flex;flex-direction:column;gap:0;}
+.tl-item{display:flex;gap:12px;padding-bottom:14px;position:relative;}
+.tl-item:last-child{padding-bottom:0;}
+.tl-item:not(:last-child)::after{content:'';position:absolute;left:11px;top:24px;bottom:0;width:1px;background:var(--border);}
+.tl-dot{width:23px;height:23px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;font-weight:700;}
+.tl-dot.active{background:var(--red);color:#fff;}
+.tl-dot.todo{background:#F0F0F0;color:var(--light);}
+.tl-body h5{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px;}
+.tl-body p{font-size:11px;color:var(--muted);line-height:1.5;}
+
+@media(max-width:768px){
+  .page{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      </div>
+      <div>
+        <div class="logo-name"><span>Kultura</span>Wraca</div>
+        <div class="logo-sub">Skup książek online</div>
+      </div>
+    </a>
+  </div>
+</nav>
+
+<div class="stepper-wrap">
+  <div class="stepper">
+    <div class="st">
+      <div class="st-num done">✓</div>
+      <span class="st-label done">Dodaj książki</span>
+    </div>
+    <div class="st-line done"></div>
+    <div class="st">
+      <div class="st-num done">✓</div>
+      <span class="st-label done">Dane do nadania</span>
+    </div>
+    <div class="st-line done"></div>
+    <div class="st">
+      <div class="st-num active">3</div>
+      <span class="st-label active">Podsumowanie</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <div>
+
+    <!-- KSIAZKI -->
+    <div class="card">
+      <div class="card-head">
+        <h2>📚 Twoje książki</h2>
+        <a href="skup.html">Edytuj listę</a>
+      </div>
+      <table class="books-sum">
+        <thead>
+          <tr>
+            <th style="width:46px;"></th>
+            <th>Tytuł</th>
+            <th style="width:70px;text-align:center;">Ilość</th>
+            <th style="width:90px;text-align:right;">Wycena</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="book-cover-sm">📖</div></td>
+            <td><div class="book-title-sm">Harry Potter i Kamień Filozoficzny</div><div class="book-isbn-sm">J.K. Rowling · ISBN: 978-83-73-19775-6</div></td>
+            <td style="text-align:center;">1 szt.</td>
+            <td style="text-align:right;" class="price-green">6,50 zł</td>
+          </tr>
+          <tr>
+            <td><div class="book-cover-sm">📖</div></td>
+            <td><div class="book-title-sm">Wiedźmin: Ostatnie życzenie</div><div class="book-isbn-sm">Andrzej Sapkowski · ISBN: 978-83-77-58110-0</div></td>
+            <td style="text-align:center;">2 szt.</td>
+            <td style="text-align:right;" class="price-green">11,60 zł</td>
+          </tr>
+          <tr>
+            <td><div class="book-cover-sm">📖</div></td>
+            <td><div class="book-title-sm">Solaris</div><div class="book-isbn-sm">Stanisław Lem · ISBN: 978-83-20-71758-8</div></td>
+            <td style="text-align:center;">1 szt.</td>
+            <td style="text-align:right;" class="price-green">4,10 zł</td>
+          </tr>
+          <tr>
+            <td><div class="book-cover-sm">📖</div></td>
+            <td><div class="book-title-sm">Lalka</div><div class="book-isbn-sm">Bolesław Prus · ISBN: 978-83-08-07123-6</div></td>
+            <td style="text-align:center;">3 szt.</td>
+            <td style="text-align:right;" class="price-green">10,50 zł</td>
+          </tr>
+          <tr>
+            <td><div class="book-cover-sm">📖</div></td>
+            <td><div class="book-title-sm">Pan Tadeusz</div><div class="book-isbn-sm">Adam Mickiewicz · ISBN: 978-83-08-07312-4</div></td>
+            <td style="text-align:center;">4 szt.</td>
+            <td style="text-align:right;" class="price-green">8,80 zł</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- DANE -->
+    <div class="card">
+      <div class="card-head">
+        <h2>📦 Dane do nadania</h2>
+        <a href="dane.html">Edytuj</a>
+      </div>
+      <div class="card-body">
+        <div class="sum-section">
+          <div class="sum-section-title">Sposób wysyłki</div>
+          <div class="sum-row">
+            <span class="sum-key">Przewoźnik</span>
+            <span class="sum-val"><span class="dhl-badge">DHL</span> &nbsp;Kurier z odbiorem z domu</span>
+          </div>
+          <div class="sum-row">
+            <span class="sum-key">Data odbioru</span>
+            <span class="sum-val">Wtorek, 25 marca 2026, godz. 10:00–14:00</span>
+          </div>
+          <div class="sum-row">
+            <span class="sum-key">Koszt wysyłki</span>
+            <span class="sum-val" style="color:var(--green);font-weight:700;">Bezpłatna ✓</span>
+          </div>
+        </div>
+        <div class="sum-section">
+          <div class="sum-section-title">Adres odbioru</div>
+          <div class="sum-row">
+            <span class="sum-key">Imię i nazwisko</span>
+            <span class="sum-val">Jan Kowalski</span>
+          </div>
+          <div class="sum-row">
+            <span class="sum-key">Adres</span>
+            <span class="sum-val">ul. Kwiatowa 12/3<br>00-001 Warszawa</span>
+          </div>
+          <div class="sum-row">
+            <span class="sum-key">Telefon</span>
+            <span class="sum-val">500 123 456</span>
+          </div>
+        </div>
+        <div class="sum-section" style="margin-bottom:0;">
+          <div class="sum-section-title">Wypłata</div>
+          <div class="sum-row">
+            <span class="sum-key">Numer konta</span>
+            <span class="sum-val" style="font-family:monospace;letter-spacing:.05em;">PL •• •••• •••• •••• •••• •••• 7823</span>
+          </div>
+          <div class="sum-row">
+            <span class="sum-key">Termin wypłaty</span>
+            <span class="sum-val">Do 48h od weryfikacji paczki</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOTAL -->
+    <div class="total-bar">
+      <div class="total-bar-left">
+        <p>Łączna wycena za wszystkie książki</p>
+        <strong>41,50 zł</strong>
+      </div>
+      <div class="total-bar-right">
+        <p>✓ Bezpłatna wysyłka</p>
+        <p>✓ Przelew w 48h</p>
+      </div>
+    </div>
+
+    <!-- REGULAMIN -->
+    <div class="card" style="margin-bottom:0;">
+      <div class="terms-wrap">
+        <label class="checkbox-row">
+          <input type="checkbox" id="terms1"/>
+          <span>Akceptuję <a href="#">regulamin serwisu</a> KulturaWraca oraz potwierdzam, że jestem właścicielem sprzedawanych książek. <strong>*</strong></span>
+        </label>
+        <label class="checkbox-row">
+          <input type="checkbox" id="terms2"/>
+          <span>Akceptuję <a href="#">politykę prywatności</a> i wyrażam zgodę na przetwarzanie moich danych osobowych w celu realizacji zamówienia. <strong>*</strong></span>
+        </label>
+        <label class="checkbox-row">
+          <input type="checkbox" id="terms3"/>
+          <span>Chcę otrzymywać powiadomienia email o statusie mojego zamówienia.</span>
+        </label>
+      </div>
+      <div class="submit-area">
+        <a href="dane.html" class="back-btn">← Wróć do danych</a>
+        <button class="submit-btn" onclick="submitOrder()">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          Złóż zamówienie
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="side-card">
+      <h4>🧾 Podsumowanie</h4>
+      <div class="side-row"><span>Liczba tytułów</span><span>5</span></div>
+      <div class="side-row"><span>Łączna ilość</span><span>11 szt.</span></div>
+      <div class="side-row"><span>Wysyłka</span><span style="color:var(--green);">Bezpłatna</span></div>
+      <div class="side-row"><span>Czas weryfikacji</span><span>do 2 dni rob.</span></div>
+      <div class="side-total">
+        <span>Do wypłaty</span>
+        <span>41,50 zł</span>
+      </div>
+    </div>
+
+    <div class="side-card">
+      <h4>🗓 Co dalej?</h4>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot active">1</div>
+          <div class="tl-body">
+            <h5>Składasz zamówienie</h5>
+            <p>Otrzymujesz email z potwierdzeniem i etykietą kurierską.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot todo">2</div>
+          <div class="tl-body">
+            <h5>Pakujesz i wysyłasz</h5>
+            <p>Kurier odbiera paczkę w wybranym terminie.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot todo">3</div>
+          <div class="tl-body">
+            <h5>Weryfikacja</h5>
+            <p>Sprawdzamy stan i zgodność książek — do 2 dni rob.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot todo">4</div>
+          <div class="tl-body">
+            <h5>Wypłata 💰</h5>
+            <p>Przelew 41,50 zł na Twoje konto w ciągu 48h.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-card">
+      <h4>❓ Pytania?</h4>
+      <div style="font-size:12px;color:var(--muted);line-height:1.8;">
+        <div>📞 <a href="tel:+48511825915" style="color:var(--red);text-decoration:none;">511 825 915</a></div>
+        <div>✉ <a href="/cdn-cgi/l/email-protection#fa8991969f8a918f968e8f889b8d889b999bba9d979b9396d4999597" style="color:var(--red);text-decoration:none;font-size:11px;"><span class="__cf_email__" data-cfemail="681b03040d18031d041c1d1a091f1a090b09280f05090104460b0705">[email&#160;protected]</span></a></div>
+        <div style="color:var(--light);font-size:11px;margin-top:4px;">Pon–Pt 8:00–16:00</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-box">
+    <div class="success-icon">
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h2>Zamówienie złożone!</h2>
+    <p>Świetnie! Twoje zamówienie <strong>#KW-2026-0042</strong> zostało przyjęte.<br>Za chwilę wyślemy na Twój email etykietę kurierską DHL oraz potwierdzenie zamówienia.</p>
+    <div class="success-steps">
+      <div class="success-step"><div class="ss-num">1</div><span>Sprawdź skrzynkę email — etykieta i potwierdzenie już w drodze.</span></div>
+      <div class="success-step"><div class="ss-num">2</div><span>Zapakuj książki w karton i przyklej etykietę DHL.</span></div>
+      <div class="success-step"><div class="ss-num">3</div><span>Kurier przyjedzie we wtorek 25 marca, godz. 10:00–14:00.</span></div>
+      <div class="success-step"><div class="ss-num">4</div><span>Po weryfikacji przelew <strong>41,50 zł</strong> trafi na Twoje konto.</span></div>
+    </div>
+    <button class="success-btn" onclick="window.location.href='index.html'">Wróć na stronę główną</button>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+function submitOrder(){
+  const t1 = document.getElementById('terms1').checked;
+  const t2 = document.getElemen

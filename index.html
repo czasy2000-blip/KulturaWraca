@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="KulturaWraca – skup książek online z całej Polski. Wpisz ISBN, wyceń książki i wyślij za darmo. Przelew w 48h. Skup stacjonarny w Ostrowie Wielkopolskim.">
+<title>KulturaWraca – Skup Książek Online | skupujemykulture.pl</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #7A1E2E;
+  --red-dark: #5C1522;
+  --red-light: #F9F0F2;
+  --red-border: #E8D0D4;
+  --gold: #C9963A;
+  --text: #1C1C1C;
+  --text-muted: #6B6B6B;
+  --text-light: #9A9A9A;
+  --border: #E8E8E8;
+  --bg: #ffffff;
+  --bg-soft: #FAFAFA;
+  --navy: #1A2A3A;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;color:var(--text);background:#fff;font-size:15px;line-height:1.6;}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid var(--border);padding:0 2rem;}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:62px;}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-icon{width:38px;height:38px;background:var(--red);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.logo-icon svg{width:22px;height:22px;}
+.logo-name{font-family:'DM Serif Display',serif;font-size:18px;color:var(--text);line-height:1;}
+.logo-name span{color:var(--red);}
+.logo-sub{font-size:10px;color:var(--text-light);font-family:'DM Sans',sans-serif;font-weight:400;margin-top:1px;}
+.nav-links{display:flex;gap:1.75rem;list-style:none;}
+.nav-links a{color:var(--text-muted);text-decoration:none;font-size:13px;font-weight:500;transition:color .2s;}
+.nav-links a:hover,.nav-links a.act{color:var(--red);}
+.nav-links a.act{font-weight:600;}
+.nav-right{display:flex;align-items:center;gap:12px;}
+.nav-fb{display:flex;align-items:center;gap:6px;color:var(--text-muted);text-decoration:none;font-size:12px;font-weight:500;}
+.nav-fb svg{width:18px;height:18px;fill:#1877F2;}
+.btn{background:var(--red);color:#fff;border:none;border-radius:7px;padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;}
+.btn:hover{background:var(--red-dark);}
+.btn-outline{background:#fff;color:var(--red);border:1.5px solid var(--red);border-radius:7px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.btn-outline:hover{background:var(--red-light);}
+
+/* HERO */
+.hero-wrap{border-bottom:1px solid var(--border);padding:2.5rem 2rem 2.5rem;}
+.hero{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 310px;gap:5rem;align-items:center;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:30px;color:var(--text);margin-bottom:6px;line-height:1.25;}
+.hero-sub{font-size:13px;color:var(--text-muted);margin-bottom:2rem;line-height:1.6;}
+.isbn-box{background:var(--bg-soft);border:1px solid var(--border);border-radius:12px;padding:1.25rem;}
+.isbn-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-light);margin-bottom:10px;}
+.isbn-row{display:flex;gap:6px;margin-bottom:10px;}
+.isbn-input{flex:1;border:1px solid #DEDEDE;border-radius:7px;padding:0 14px;height:44px;font-size:14px;color:var(--text);background:#fff;outline:none;font-family:'DM Sans',sans-serif;transition:border-color .2s;}
+.isbn-input:focus{border-color:var(--red);}
+.isbn-input::placeholder{color:#C0C0C0;}
+.isbn-cam{width:44px;height:44px;border:1px solid #DEDEDE;border-radius:7px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:#fff;color:var(--text-muted);flex-shrink:0;transition:border-color .2s;}
+.isbn-cam:hover{border-color:var(--red);}
+.isbn-cam svg{width:17px;height:17px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.isbn-btn{background:var(--red);color:#fff;border:none;border-radius:7px;padding:0 20px;height:44px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;transition:background .2s;}
+.isbn-btn:hover{background:var(--red-dark);}
+.isbn-links{display:flex;flex-direction:column;gap:5px;}
+.isbn-link{font-size:11px;color:var(--red);cursor:pointer;text-decoration:none;opacity:.8;transition:opacity .2s;}
+.isbn-link:hover{opacity:1;text-decoration:underline;}
+.steps-aside{display:flex;flex-direction:column;gap:10px;}
+.step-card{border:1px solid var(--border);border-radius:10px;overflow:hidden;display:flex;align-items:stretch;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.04);transition:box-shadow .2s;}
+.step-card:hover{box-shadow:0 3px 10px rgba(122,30,46,.1);}
+.step-photo{width:70px;flex-shrink:0;overflow:hidden;}
+.step-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+.step-body{padding:10px 12px;flex:1;}
+.step-num-row{display:flex;align-items:center;gap:7px;margin-bottom:3px;}
+.step-num{width:20px;height:20px;border-radius:50%;background:var(--red);color:#fff;font-weight:700;font-size:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.step-body h4{font-size:12px;font-weight:600;color:var(--text);}
+.step-body p{font-size:11px;color:var(--text-muted);line-height:1.5;margin-top:2px;}
+
+/* MIN BAR */
+.minbar{background:#FFF8F0;border-bottom:1px solid #FDDEB8;padding:9px 2rem;}
+.minbar-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:10px;}
+.minbar-badge{background:#E8931A;color:#fff;border-radius:4px;padding:2px 9px;font-size:11px;font-weight:600;white-space:nowrap;}
+.minbar p{font-size:12px;color:#665533;}
+
+/* SECTIONS */
+.section{padding:3rem 2rem;max-width:1100px;margin:0 auto;}
+.eyebrow{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:5px;}
+.sec-title{font-family:'DM Serif Display',serif;font-size:24px;color:var(--text);margin-bottom:2rem;line-height:1.3;}
+.divider{height:1px;background:var(--border);}
+
+/* HOW IT WORKS */
+.how-rows{display:flex;flex-direction:column;gap:3rem;}
+.how-row{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:center;}
+.how-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:6px;}
+.how-title{font-family:'DM Serif Display',serif;font-size:20px;color:var(--text);margin-bottom:10px;}
+.how-desc{font-size:13px;color:var(--text-muted);line-height:1.75;margin-bottom:10px;}
+.how-check{display:flex;align-items:flex-start;gap:9px;margin-bottom:7px;font-size:13px;color:var(--text);line-height:1.5;}
+.how-chk{width:17px;height:17px;border-radius:50%;background:var(--red);color:#fff;font-size:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.how-img{border-radius:14px;overflow:hidden;height:210px;}
+.how-img img{width:100%;height:100%;object-fit:cover;display:block;}
+
+/* FEATURES */
+.feats{display:grid;grid-template-columns:repeat(4,1fr);gap:1.75rem;}
+.feat{padding:1.25rem;border:1px solid var(--border);border-radius:10px;border-top:3px solid var(--red);}
+.feat-icon{font-size:22px;margin-bottom:10px;display:block;}
+.feat h4{font-size:13px;font-weight:600;color:var(--text);margin-bottom:5px;}
+.feat p{font-size:12px;color:var(--text-muted);line-height:1.65;}
+
+/* LOCAL */
+.local-bg{background:var(--red-light);border-top:1px solid var(--red-border);border-bottom:1px solid var(--red-border);padding:3rem 2rem;}
+.local-inner{max-width:1100px;margin:0 auto;}
+.local-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.75rem;margin-top:1.5rem;}
+.local-card{background:#fff;border:1px solid var(--red-border);border-radius:12px;padding:1.5rem;border-top:3px solid var(--red);}
+.local-card h3{font-family:'DM Serif Display',serif;font-size:16px;color:var(--text);margin-bottom:8px;}
+.local-card p{font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:12px;}
+.cities{display:flex;flex-wrap:wrap;gap:6px;}
+.city{background:#fff;border:1px solid var(--red-border);border-radius:5px;padding:4px 11px;font-size:11px;color:var(--red);font-weight:600;}
+
+/* NO BUY */
+.nobuy-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.nobuy-item{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--text-muted);line-height:1.5;}
+.nobuy-x{width:16px;height:16px;border-radius:50%;background:#E8E8E8;color:#999;font-size:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+
+/* FAQ */
+.faq{display:flex;flex-direction:column;gap:0;}
+.faq-item{border-bottom:1px solid var(--border);padding:1rem 0;cursor:pointer;}
+.faq-q{font-size:14px;font-weight:600;color:var(--text);display:flex;justify-content:space-between;align-items:center;gap:1rem;}
+.faq-q svg{width:16px;height:16px;stroke:var(--text-muted);stroke-width:2;fill:none;flex-shrink:0;transition:transform .3s;}
+.faq-a{font-size:13px;color:var(--text-muted);line-height:1.7;max-height:0;overflow:hidden;transition:max-height .3s ease, padding .3s;}
+.faq-item.open .faq-a{max-height:200px;padding-top:8px;}
+.faq-item.open .faq-q svg{transform:rotate(180deg);}
+
+/* CTA */
+.cta{background:var(--red);padding:2.5rem 2rem;text-align:center;}
+.cta p{color:rgba(255,255,255,.7);font-size:12px;margin-bottom:4px;}
+.cta-count{font-family:'DM Serif Display',serif;font-size:28px;color:#fff;display:block;margin-bottom:1rem;}
+.cta-count em{color:var(--gold);font-style:normal;}
+.btn-white{background:#fff;color:var(--red);border:none;border-radius:7px;padding:12px 32px;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.btn-white:hover{background:#F5F5F5;}
+
+/* FOOTER */
+footer{background:var(--navy);padding:3rem 2rem 1.5rem;}
+.footer-grid{display:grid;grid-template-columns:2.5fr 1fr 1fr 2fr;gap:2.5rem;max-width:1100px;margin:0 auto 2rem;}
+.footer-logo{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.footer-logo-icon{width:32px;height:32px;background:var(--red);border-radius:6px;display:flex;align-items:center;justify-content:center;}
+.footer-logo-icon svg{width:18px;height:18px;}
+.footer-logo-name{font-family:'DM Serif Display',serif;font-size:16px;color:#fff;}
+.footer-logo-name span{color:var(--gold);}
+.footer-desc{font-size:12px;color:#6A7E91;line-height:1.7;margin-bottom:12px;}
+.footer-contact a{display:flex;align-items:center;gap:6px;font-size:12px;color:#8A9EAF;text-decoration:none;margin-bottom:5px;}
+.footer-contact a:hover{color:#fff;}
+.footer-col h5{font-size:11px;font-weight:700;color:#fff;margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em;}
+.footer-col h5::after{content:'';display:block;width:24px;height:2px;background:var(--red);margin-top:5px;}
+.footer-col a{display:block;font-size:12px;color:#6A7E91;text-decoration:none;margin-bottom:5px;transition:color .2s;}
+.footer-col a:hover{color:#fff;}
+.footer-bottom{max-width:1100px;margin:0 auto;border-top:1px solid #253545;padding-top:1.25rem;display:flex;justify-content:space-between;align-items:center;}
+.footer-bottom p{font-size:11px;color:#3A5060;}
+.footer-bottom a{font-size:11px;color:#3A5060;text-decoration:none;}
+.footer-bottom a:hover{color:#6A7E91;}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.hero,.minbar-inner{animation:fadeUp .5s ease both;}
+
+/* MOBILE */
+@media(max-width:768px){
+  .nav-links,.nav-fb{display:none;}
+  .hero,.how-row,.local-grid,.footer-grid{grid-template-columns:1fr;}
+  .how-row .how-img{order:-1;}
+  .feats{grid-template-columns:1fr 1fr;}
+  .nobuy-grid{grid-template-columns:1fr;}
+  .hero{gap:2rem;}
+  .footer-grid{gap:1.5rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+          <line x1="12" y1="6" x2="16" y2="6"/>
+          <line x1="12" y1="10" x2="16" y2="10"/>
+        </svg>
+      </div>
+      <div>
+        <div class="logo-name"><span>Kultura</span>Wraca</div>
+        <div class="logo-sub">Skup książek online</div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#" class="act">Skup książek</a></li>
+      <li><a href="#jak-to-dziala">Jak to działa</a></li>
+      <li><a href="#lokalne">Skup lokalny</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="https://facebook.com/kulturawraca" target="_blank" class="nav-fb">
+        <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        Facebook
+      </a>
+      <button class="btn" onclick="document.getElementById('isbn-input').focus()">Sprzedaj książkę →</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero-wrap">
+  <div class="hero">
+    <div>
+      <h1 class="hero-title">Skup książek i podręczników</h1>
+      <p class="hero-sub">Wpisz numer ISBN z okładki — natychmiast poznasz wycenę.<br>Bezpłatna wysyłka kurierem lub paczкоматем. Przelew w 48h.</p>
+      <div class="isbn-box">
+        <div class="isbn-label">Numer ISBN (tylna okładka książki)</div>
+        <div class="isbn-row">
+          <input class="isbn-input" id="isbn-input" type="text" placeholder="np. 978-83-08-07123-4" />
+          <div class="isbn-cam" title="Skanuj aparatem">
+            <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          </div>
+          <button class="isbn-btn">Wycena</button>
+        </div>
+        <div class="isbn-links">
+          <a class="isbn-link">+ Dodaj książkę bez numeru ISBN</a>
+          <a class="isbn-link">? Gdzie znajdę numer ISBN?</a>
+        </div>
+      </div>
+    </div>
+    <div class="steps-aside">
+      <div class="step-card">
+        <div class="step-photo">
+          <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=140&h=100&fit=crop" alt="Skanowanie ISBN" loading="lazy"/>
+        </div>
+        <div class="step-body">
+          <div class="step-num-row"><div class="step-num">1</div><h4>Dodajesz książkę</h4></div>
+          <p>Wpisujesz lub skanujesz numer ISBN</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-photo">
+          <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=140&h=100&fit=crop" alt="Wysyłka paczki" loading="lazy"/>
+        </div>
+        <div class="step-body">
+          <div class="step-num-row"><div class="step-num">2</div><h4>Przesyłasz za darmo</h4></div>
+          <p>Nadajesz w paczkomacie lub kurierem DHL</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-photo">
+          <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=140&h=100&fit=crop" alt="Przelew bankowy" loading="lazy"/>
+        </div>
+        <div class="step-body">
+          <div class="step-num-row"><div class="step-num">3</div><h4>Odbierasz pieniądze</h4></div>
+          <p>Przelew na konto w ciągu 48 godzin</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MIN BAR -->
+<div class="minbar">
+  <div class="minbar-inner">
+    <span class="minbar-badge">ℹ Minimum</span>
+    <p>Przyjmujemy paczki od <strong>40 zł</strong> wartości skupionych książek. Po osiągnięciu progu generujemy bezpłatną etykietę kurierską.</p>
+  </div>
+</div>
+
+<!-- JAK TO DZIAŁA -->
+<div id="jak-to-dziala" class="section">
+  <p class="eyebrow">Jak to działa</p>
+  <h2 class="sec-title">Sprzedaj książki w 3 prostych krokach</h2>
+  <div class="how-rows">
+    <div class="how-row">
+      <div>
+        <p class="how-label">Krok 1</p>
+        <h3 class="how-title">Dodaj książkę</h3>
+        <p class="how-desc">Zeskanuj lub wpisz kod ISBN książki. Kliknij ikonę aparatu, by zeskanować kod kamerą telefonu lub komputera. Zobaczysz od razu czy skupujemy daną książkę i za ile.</p>
+        <p class="how-desc" style="font-weight:600;color:var(--text);margin-bottom:4px;">Książka bez ISBN?</p>
+        <p class="how-desc">Wybierz opcję "Dodaj książkę bez numeru ISBN" — zrób zdjęcie okładki i podaj tytuł, my wycenimy ją ręcznie.</p>
+      </div>
+      <div class="how-img">
+        <img src="https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=700&h=420&fit=crop" alt="Dodawanie książki przez ISBN" loading="lazy"/>
+      </div>
+    </div>
+    <div class="how-row" style="direction:rtl;">
+      <div style="direction:ltr;" class="how-img">
+        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=700&h=420&fit=crop" alt="Wysyłka paczki z książkami" loading="lazy"/>
+      </div>
+      <div style="direction:ltr;">
+        <p class="how-label">Krok 2</p>
+        <h3 class="how-title">Wyślij za darmo</h3>
+        <p class="how-desc">Masz dwie wygodne opcje nadania paczki — obie całkowicie bezpłatne:</p>
+        <div class="how-check"><div class="how-chk">✓</div><span><strong>Kurier DHL</strong> – wybierz datę odbioru z domu lub pracy. Brak drukarki? Kurier przyjedzie z gotową etykietą.</span></div>
+        <div class="how-check"><div class="how-chk">✓</div><span><strong>Paczkomat InPost</strong> – wygeneruj kod, wejdź do dowolnego paczkomatu i nadaj paczкę bez drukowania czegokolwiek.</span></div>
+      </div>
+    </div>
+    <div class="how-row">
+      <div>
+        <p class="how-label">Krok 3</p>
+        <h3 class="how-title">Odbierasz pieniądze</h3>
+        <p class="how-desc">Po otrzymaniu paczki sprawdzamy stan i zgodność książek. Nasza weryfikacja zajmuje do 2 dni roboczych.</p>
+        <p class="how-desc">Gdy zamówienie zmieni status na "Zrealizowane" — pieniądze trafiają na Twoje konto bankowe w ciągu 48 godzin.</p>
+      </div>
+      <div class="how-img">
+        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=700&h=420&fit=crop" alt="Wypłata pieniędzy na konto" loading="lazy"/>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- DLACZEGO MY -->
+<div class="section">
+  <p class="eyebrow">Szybko i wygodnie</p>
+  <h2 class="sec-title">Dlaczego warto wybrać KulturaWraca?</h2>
+  <div class="feats">
+    <div class="feat">
+      <span class="feat-icon">⚡</span>
+      <h4>Prosty proces</h4>
+      <p>Sprzedaż zajmuje tylko kilka minut. Wpisz ISBN, zbierz 40 zł i zamów etykietę.</p>
+    </div>
+    <div class="feat">
+      <span class="feat-icon">📦</span>
+      <h4>Darmowa wysyłka</h4>
+      <p>Kurier DHL lub paczkomat InPost — generujemy etykietę, Ty tylko nadajesz.</p>
+    </div>
+    <div class="feat">
+      <span class="feat-icon">💰</span>
+      <h4>Szybka wypłata</h4>
+      <p>Przelew trafia na Twoje konto w ciągu 48h od sprawdzenia paczki.</p>
+    </div>
+    <div class="feat">
+      <span class="feat-icon">♻️</span>
+      <h4>Ekologiczne podejście</h4>
+      <p>Twoje książki trafiają do nowych czytelników — a nie na makulaturę.</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- LOKALNIE -->
+<div id="lokalne" class="local-bg">
+  <div class="local-inner">
+    <p class="eyebrow">Skupujemy lokalnie</p>
+    <h2 class="sec-title" style="margin-bottom:6px;">Skup stacjonarny i mobilny</h2>
+    <p style="font-size:13px;color:var(--text-muted);">Oprócz skupu online działamy też lokalnie — mamy własny punkt i dojeżdżamy do klientów na Dolnym Śląsku i Wielkopolsce.</p>
+    <div class="local-grid">
+      <div class="local-card">
+        <h3>🏪 Punkt stacjonarny — Ostrów Wielkopolski</h3>
+        <p>Zapraszamy do naszego lokalu przy ul. Wrocławskiej 1/3. Przyjdź osobiście z książkami — wyceniamy na miejscu i płacimy od ręki. Czynne <strong>pon.–pt. 8:00–16:00</strong>.</p>
+        <div class="cities">
+          <span class="city">Ostrów Wielkopolski</span>
+          <span class="city">i okolice</span>
+        </div>
+      </div>
+      <div class="local-card">
+        <h3>🚗 Mobilny skup — dojeżdżamy do Ciebie</h3>
+        <p>Masz dużo książek? Przyjedziemy do Ciebie! Obsługujemy Dolny Śląsk oraz większe miasta w całej Polsce. Szczególnie polecane przy zbiorach powyżej 50 książek.</p>
+        <div class="cities">
+          <span class="city">Wrocław</span>
+          <span class="city">Wałbrzych</span>
+          <span class="city">Jelenia Góra</span>
+          <span class="city">Legnica</span>
+          <span class="city">Zielona Góra</span>
+          <span class="city">Łódź</span>
+          <span class="city">Poznań</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CZEGO NIE SKUPUJEMY -->
+<div class="section">
+  <p class="eyebrow">Ważne informacje</p>
+  <h2 class="sec-title">Jakich książek nie skupujemy?</h2>
+  <div class="nobuy-grid">
+    <div class="nobuy-item"><div class="nobuy-x">✕</div><span>Encyklopedii i leksykonów</span></div>
+    <div class="nobuy-item"><div class="nobuy-x">✕</div><span>Romansów typu Harlequin</span></div>
+    <div class="nobuy-item"><div class="nobuy-x">✕</div><span>Książek podartych lub zniszczonych</span></div>
+    <div class="nobuy-item"><div class="nobuy-x">✕</div><span>Książek z zamalowanymi lub wyrwanymi stronami</span></div>
+    <div class="nobuy-item"><div class="nobuy-x">✕</div><span>Podręczników szkolnych wydanych przed 2019 r.</span></div>
+    <div class="nobuy-item"><div class="nobuy-x">✕</div><span>Podręczników akademickich starszych niż 5 lat</span></div>
+    <div class="nobuy-item"><div class="nobuy-x">✕</div><span>Książek w języku obcym (poza angielskim)</span></div>
+    <div class="nobuy-item"><div class="nobuy-x">✕</div><span>Audiobooków i książek z płytą CD/DVD</span></div>
+    <div class="nobuy-item"><div class="nobuy-x">✕</div><span>Atlasów, map i kalendarzy</span></div>
+    <div class="nobuy-item"><div class="nobuy-x">✕</div><span>Czasopism i magazynów</span></div>
+    <div class="nobuy-item"><div class="nobuy-x">✕</div><span>Książek z napisem "Egzemplarz bezpłatny"</span></div>
+    <div class="nobuy-item"><div class="nobuy-x">✕</div><span>Książek kucharskich z serii "Lidl", "Biedronka"</span></div>
+  </div>
+  <p style="font-size:12px;color:var(--text-light);margin-top:1.5rem;">Zastrzegamy sobie prawo do nieustalenia wyceny dla dowolnej pozycji.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+<div id="faq" class="section">
+  <p class="eyebrow">FAQ</p>
+  <h2 class="sec-title">Najczęściej zadawane pytania</h2>
+  <div class="faq">
+    <div class="faq-item">
+      <div class="faq-q">Jak wygląda cały proces skupu?<svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      <div class="faq-a">Wpisz numery ISBN swoich książek, zbierz minimum 40 zł wartości, zamów bezpłatną etykietę kurierską, spakuj i wyślij paczkę. Po weryfikacji (do 2 dni roboczych) przelew trafia na Twoje konto w ciągu 48h.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Jaki jest koszt wysyłki?<svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      <div class="faq-a">Wysyłka jest całkowicie bezpłatna. Generujemy etykietę kurierską DHL lub kod do paczkomatu InPost — zupełnie za darmo, bez żadnych ukrytych kosztów.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">W jaki sposób dokonujecie płatności?<svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      <div class="faq-a">Płacimy przelewem bankowym na numer konta podany w Twoim profilu. Przelew realizujemy w ciągu 48 godzin od pozytywnej weryfikacji paczki.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Czy odbieracie książki za darmo, jeśli nie mają wartości?<svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      <div class="faq-a">Nie — skupujemy tylko książki, za które możemy zapłacić minimum 40 zł łącznie. Jeśli masz dużo książek o niskiej wartości, skontaktuj się z nami — może uda się coś ustalić.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Ile płacicie za książkę?<svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      <div class="faq-a">Wycena jest dynamiczna — zależy od aktualnych cen rynkowych danej książki. Po wpisaniu ISBN od razu zobaczysz dokładną kwotę jaką zapłacimy.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Jak spakować książki do wysyłki?<svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      <div class="faq-a">Zapakuj książki w karton (możesz użyć zwykłego pudełka po zakupach). Upewnij się, że są dobrze zabezpieczone i nie ma luzu w środku. Nie musisz owijać każdej książki osobno.</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta">
+  <p>Dołącz do naszych klientów</p>
+  <span class="cta-count">Skup <em>online</em> z całej Polski — szybko i bezpiecznie</span>
+  <button class="btn-white" onclick="document.getElementById('isbn-input').focus();window.scrollTo({top:0,behavior:'smooth'})">Zacznij wycenę →</button>
+</div>
+
+<!-- FOOTER -->
+<footer id="kontakt">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">
+        <div class="footer-logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+          </svg>
+        </div>
+        <div class="footer-logo-name"><span>Kultura</span>Wraca</div>
+      </div>
+      <p class="footer-desc">Skupujemy używane książki z całej Polski od ponad 4 lat. Mała firma z pasją — każda książka trafia do nowego domu, nie na makulaturę.</p>
+      <div class="footer-contact">
+        <a href="tel:+48511825915">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>
+          511 825 915
+        </a>
+        <a href="/cdn-cgi/l/email-protection#67140c0b02170c120b13121506101506040627000a060e0b4904080a">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <span class="__cf_email__" data-cfemail="5320383f362338263f27262132242132303213343e323a3f7d303c3e">[email&#160;protected]</span>
+        </a>
+        <a href="#">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          ul. Wrocławska 1/3, 63-400 Ostrów Wlkp.
+        </a>
+        <a href="https://facebook.com/kulturawraca" target="_blank">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          facebook.com/kulturawraca
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>O skupie</h5>
+      <a href="#">Kim jesteśmy</a>
+      <a href="#jak-to-dziala">Jak to działa</a>
+      <a href="#">Jakich nie skupujemy</a>
+      <a href="#faq">FAQ</a>
+      <a href="#">Blog</a>
+      <a href="#kontakt">Kontakt</a>
+    </div>
+    <div class="footer-col">
+      <h5>Sprzedaj</h5>
+      <a href="#">Zacznij wycenę</a>
+      <a href="#jak-to-dziala">Jak to działa</a>
+      <a href="#">Jakich nie skupujemy</a>
+      <a href="#">Pomoc</a>
+      <a href="#">Regulamin</a>
+      <a href="#">Polityka prywatności</a>
+    </div>
+    <div class="footer-col">
+      <h5>Skupy regionalne</h5>
+      <a href="#">Skup książek Wrocław</a>
+      <a href="#">Skup książek Warszawa</a>
+      <a href="#">Skup książek Kraków</a>
+      <a href="#">Skup książek Poznań</a>
+      <a href="#">Skup książek Gdańsk</a>
+      <a href="#">Skup książek Łódź</a>
+      <a href="#">Skup książek Katowice</a>
+      <a href="#">Skup książek Wałbrzych</a>
+      <a href="#">Skup książek Jelenia Góra</a>
+      <a href="#">Skup książek Legnica</a>
+      <a href="#">Skup książek Zielona Góra</a>
+      <a href="#">Skup książek Ostrów Wlkp.</a>
+      <a href="#">Skup książek Bydgoszcz</a>
+      <a href="#">Skup książek Szczecin</a>
+      <a href="#">Skup książek Rzeszów</a>
+      <a href="#">Skup książek Lublin</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 KulturaWraca | NIP: 8952249461 | skupujemykulture.pl — Wszystkie prawa zastrzeżone.</p>
+    <div style="display:flex;gap:1rem;">
+      <a href="#">Regulamin</a>
+      <a href="#">Polityka prywatności</a>
+      <a href="#">Cookies</a>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+document.querySelectorAll('.faq-item').forEach(item=>{
+  item.querySelect

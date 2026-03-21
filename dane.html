@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dane do nadania — KulturaWraca</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#7A1E2E;--red-dark:#5C1522;--red-light:#F9F0F2;--red-border:#E8D0D4;
+  --gold:#C9963A;--text:#1C1C1C;--muted:#6B6B6B;--light:#9A9A9A;
+  --border:#E8E8E8;--bg:#fff;--soft:#FAFAFA;--navy:#1A2A3A;
+  --green:#1A7A3C;--green-light:#EDF7F1;--green-border:#B8DEC8;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;color:var(--text);background:#F4F4F4;font-size:15px;}
+
+.nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2rem;position:sticky;top:0;z-index:100;}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:62px;}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-icon{width:36px;height:36px;background:var(--red);border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.logo-icon svg{width:20px;height:20px;stroke:#fff;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.logo-name{font-family:'DM Serif Display',serif;font-size:17px;color:var(--text);}
+.logo-name span{color:var(--red);}
+.logo-sub{font-size:10px;color:var(--light);margin-top:-1px;}
+
+.stepper-wrap{background:#fff;border-bottom:1px solid var(--border);padding:1rem 2rem;}
+.stepper{max-width:700px;margin:0 auto;display:flex;align-items:center;}
+.st{display:flex;align-items:center;gap:8px;flex:1;}
+.st-num{width:28px;height:28px;border-radius:50%;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.st-num.done{background:var(--green);}
+.st-num.active{background:var(--red);}
+.st-num.todo{background:#E8E8E8;color:var(--light);}
+.st-label{font-size:12px;font-weight:600;}
+.st-label.done{color:var(--green);}
+.st-label.active{color:var(--red);}
+.st-label.todo{color:var(--light);}
+.st-line{flex:1;height:1px;margin:0 8px;}
+.st-line.done{background:var(--green);}
+.st-line.todo{background:var(--border);}
+
+.page{max-width:1100px;margin:1.5rem auto;padding:0 2rem;display:grid;grid-template-columns:1fr 320px;gap:1.5rem;align-items:start;}
+
+.card{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:1.25rem;}
+.card-head{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);}
+.card-head h2{font-family:'DM Serif Display',serif;font-size:18px;color:var(--text);margin-bottom:2px;}
+.card-head p{font-size:12px;color:var(--muted);}
+.card-body{padding:1.5rem;}
+
+/* SHIPPING CHOICE */
+.ship-options{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.5rem;}
+.ship-opt{border:2px solid var(--border);border-radius:10px;padding:1rem;cursor:pointer;transition:all .2s;position:relative;}
+.ship-opt:hover{border-color:var(--red-border);}
+.ship-opt.selected{border-color:var(--red);background:var(--red-light);}
+.ship-opt input[type=radio]{position:absolute;opacity:0;width:0;height:0;}
+.ship-opt-logo{height:28px;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.dhl-badge{background:#FFCC00;color:#D40511;font-weight:900;font-size:14px;padding:3px 8px;border-radius:4px;letter-spacing:.5px;}
+.inpost-badge{background:#FFD200;color:#1A1A1A;font-weight:900;font-size:13px;padding:3px 8px;border-radius:4px;}
+.ship-opt h4{font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.ship-opt p{font-size:12px;color:var(--muted);line-height:1.5;}
+.ship-check{position:absolute;top:10px;right:10px;width:18px;height:18px;border-radius:50%;background:var(--red);display:none;align-items:center;justify-content:center;}
+.ship-opt.selected .ship-check{display:flex;}
+.ship-check svg{width:10px;height:10px;stroke:#fff;stroke-width:3;fill:none;}
+
+/* FORM */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.form-grid.one{grid-template-columns:1fr;}
+.form-grid.three{grid-template-columns:2fr 1fr 1fr;}
+.field{display:flex;flex-direction:column;gap:5px;}
+.field.span2{grid-column:span 2;}
+.label{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);}
+.label .req{color:var(--red);}
+.input{border:1.5px solid var(--border);border-radius:8px;padding:0 14px;height:44px;font-size:14px;color:var(--text);background:#fff;outline:none;font-family:'DM Sans',sans-serif;transition:border-color .2s;width:100%;}
+.input:focus{border-color:var(--red);}
+.input::placeholder{color:#C8C8C8;}
+.input.error{border-color:#E53E3E;}
+.field-note{font-size:11px;color:var(--light);line-height:1.5;}
+.field-note.warn{color:#B45309;}
+
+/* ACCOUNT SECTION */
+.account-wrap{background:var(--soft);border:1px solid var(--border);border-radius:10px;padding:1.25rem;margin-top:1rem;}
+.account-wrap h4{font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;display:flex;align-items:center;gap:6px;}
+.account-wrap p{font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6;}
+.iban-row{display:flex;gap:8px;align-items:flex-start;}
+.iban-prefix{height:44px;background:#F0F0F0;border:1.5px solid var(--border);border-radius:8px;padding:0 12px;font-size:14px;font-weight:600;color:var(--muted);display:flex;align-items:center;flex-shrink:0;}
+.privacy-note{display:flex;align-items:flex-start;gap:8px;margin-top:10px;font-size:11px;color:var(--muted);line-height:1.5;}
+.privacy-note svg{width:14px;height:14px;stroke:var(--green);stroke-width:2;fill:none;flex-shrink:0;margin-top:1px;}
+
+/* GOOGLE LOGIN */
+.google-section{background:var(--soft);border:1px solid var(--border);border-radius:12px;padding:1.5rem;text-align:center;margin-bottom:1.25rem;}
+.google-section h3{font-family:'DM Serif Display',serif;font-size:16px;color:var(--text);margin-bottom:6px;}
+.google-section p{font-size:12px;color:var(--muted);margin-bottom:1.25rem;line-height:1.6;}
+.google-btn{display:inline-flex;align-items:center;gap:10px;background:#fff;border:1.5px solid var(--border);border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;color:var(--text);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;width:100%;justify-content:center;}
+.google-btn:hover{border-color:#aaa;box-shadow:0 2px 6px rgba(0,0,0,.08);}
+.google-logo{width:18px;height:18px;}
+.divider-or{display:flex;align-items:center;gap:10px;margin:12px 0;font-size:11px;color:var(--light);}
+.divider-or::before,.divider-or::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* SIDEBAR */
+.sidebar{display:flex;flex-direction:column;gap:1rem;}
+.sum-card{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.sum-head{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.sum-head h3{font-family:'DM Serif Display',serif;font-size:16px;color:var(--text);}
+.sum-head a{font-size:12px;color:var(--red);text-decoration:none;}
+.sum-body{padding:1rem 1.25rem;}
+.sum-book{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);}
+.sum-book:last-of-type{border-bottom:none;}
+.sum-book-cover{width:30px;height:42px;background:#F0F0F0;border-radius:3px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.sum-book-title{flex:1;font-size:12px;font-weight:600;color:var(--text);line-height:1.4;}
+.sum-book-qty{font-size:11px;color:var(--muted);}
+.sum-book-price{font-size:13px;font-weight:700;color:var(--green);white-space:nowrap;}
+.sum-total-row{display:flex;justify-content:space-between;align-items:center;padding-top:12px;margin-top:4px;border-top:1px solid var(--border);}
+.sum-total-row span:first-child{font-size:13px;font-weight:600;}
+.sum-total-row span:last-child{font-size:20px;font-weight:700;color:var(--green);}
+
+.info-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.25rem;}
+.info-card h4{font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px;}
+.info-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:7px;font-size:12px;color:var(--muted);line-height:1.5;}
+.info-dot{width:5px;height:5px;border-radius:50%;background:var(--red);flex-shrink:0;margin-top:5px;}
+
+/* SUBMIT */
+.submit-area{padding:1.25rem 1.5rem;border-top:1px solid var(--border);background:var(--soft);display:flex;justify-content:space-between;align-items:center;}
+.back-btn{background:#fff;color:var(--text);border:1.5px solid var(--border);border-radius:8px;padding:11px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;text-decoration:none;display:inline-block;}
+.back-btn:hover{border-color:var(--red);color:var(--red);}
+.submit-btn{background:var(--red);color:#fff;border:none;border-radius:8px;padding:12px 28px;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;}
+.submit-btn:hover{background:var(--red-dark);}
+
+/* TABS */
+.tabs{display:flex;border-bottom:1px solid var(--border);margin:-1.5rem -1.5rem 1.5rem;}
+.tab{padding:12px 20px;font-size:13px;font-weight:600;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .2s;}
+.tab.active{color:var(--red);border-bottom-color:var(--red);}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+@media(max-width:768px){
+  .page{grid-template-columns:1fr;}
+  .ship-options,.form-grid,.form-grid.three{grid-template-columns:1fr;}
+  .field.span2{grid-column:span 1;}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      </div>
+      <div>
+        <div class="logo-name"><span>Kultura</span>Wraca</div>
+        <div class="logo-sub">Skup książek online</div>
+      </div>
+    </a>
+  </div>
+</nav>
+
+<div class="stepper-wrap">
+  <div class="stepper">
+    <div class="st">
+      <div class="st-num done">✓</div>
+      <span class="st-label done">Dodaj książki</span>
+    </div>
+    <div class="st-line done"></div>
+    <div class="st">
+      <div class="st-num active">2</div>
+      <span class="st-label active">Dane do nadania</span>
+    </div>
+    <div class="st-line todo"></div>
+    <div class="st">
+      <div class="st-num todo">3</div>
+      <span class="st-label todo">Podsumowanie</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <div>
+
+    <!-- LOGOWANIE -->
+    <div class="google-section">
+      <h3>Zaloguj się, żeby kontynuować</h3>
+      <p>Potrzebujemy Twojego konta, żeby zapisać zamówienie<br>i wysłać Ci etykietę kurierską na email.</p>
+      <button class="google-btn" onclick="handleGoogleLogin()">
+        <svg class="google-logo" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Kontynuuj z Google
+      </button>
+      <div class="divider-or">lub wpisz email ręcznie</div>
+      <div style="display:flex;gap:8px;">
+        <input class="input" type="email" placeholder="twoj@email.pl" style="flex:1;" />
+        <button style="background:var(--red);color:#fff;border:none;border-radius:8px;padding:0 18px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;">Dalej →</button>
+      </div>
+    </div>
+
+    <!-- WYSYŁKA -->
+    <div class="card">
+      <div class="card-head">
+        <h2>Wybierz sposób wysyłki</h2>
+        <p>Obie opcje są bezpłatne — wybierz wygodniejszą dla siebie.</p>
+      </div>
+      <div class="card-body">
+        <div class="ship-options">
+          <label class="ship-opt selected" id="optDHL" onclick="selectShip('dhl')">
+            <input type="radio" name="ship" value="dhl" checked/>
+            <div class="ship-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+            <div class="ship-opt-logo"><span class="dhl-badge">DHL</span></div>
+            <h4>Kurier DHL — odbiór z domu</h4>
+            <p>Wybierasz datę i godzinę odbioru. Brak drukarki? Kurier przyjedzie z etykietą.</p>
+          </label>
+          <label class="ship-opt" id="optInpost" onclick="selectShip('inpost')">
+            <input type="radio" name="ship" value="inpost"/>
+            <div class="ship-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+            <div class="ship-opt-logo"><span class="inpost-badge">InPost</span></div>
+            <h4>Paczkomat InPost 24/7</h4>
+            <p>Wygeneruj kod i nadaj w dowolnym paczkomacie bez drukowania etykiety.</p>
+          </label>
+        </div>
+
+        <!-- DHL FIELDS -->
+        <div id="dhlFields">
+          <div class="form-grid" style="margin-bottom:12px;">
+            <div class="field">
+              <label class="label">Imię <span class="req">*</span></label>
+              <input class="input" type="text" placeholder="Jan"/>
+            </div>
+            <div class="field">
+              <label class="label">Nazwisko <span class="req">*</span></label>
+              <input class="input" type="text" placeholder="Kowalski"/>
+            </div>
+          </div>
+          <div class="form-grid one" style="margin-bottom:12px;">
+            <div class="field">
+              <label class="label">Ulica i numer domu / mieszkania <span class="req">*</span></label>
+              <input class="input" type="text" placeholder="ul. Kwiatowa 12/3"/>
+            </div>
+          </div>
+          <div class="form-grid three" style="margin-bottom:12px;">
+            <div class="field">
+              <label class="label">Miasto <span class="req">*</span></label>
+              <input class="input" type="text" placeholder="Warszawa"/>
+            </div>
+            <div class="field">
+              <label class="label">Kod pocztowy <span class="req">*</span></label>
+              <input class="input" type="text" placeholder="00-001" maxlength="6"/>
+            </div>
+            <div class="field">
+              <label class="label">Telefon <span class="req">*</span></label>
+              <input class="input" type="tel" placeholder="500 123 456"/>
+            </div>
+          </div>
+          <div class="form-grid" style="margin-bottom:0;">
+            <div class="field">
+              <label class="label">Preferowana data odbioru</label>
+              <input class="input" type="date"/>
+              <span class="field-note">Kurier przyjedzie w wybranym dniu roboczym.</span>
+            </div>
+            <div class="field">
+              <label class="label">Preferowane godziny</label>
+              <select class="input">
+                <option>8:00 – 12:00</option>
+                <option>10:00 – 14:00</option>
+                <option>12:00 – 16:00</option>
+                <option>14:00 – 18:00</option>
+                <option>Dowolna pora</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- INPOST FIELDS -->
+        <div id="inpostFields" style="display:none;">
+          <div class="form-grid" style="margin-bottom:12px;">
+            <div class="field">
+              <label class="label">Imię <span class="req">*</span></label>
+              <input class="input" type="text" placeholder="Jan"/>
+            </div>
+            <div class="field">
+              <label class="label">Nazwisko <span class="req">*</span></label>
+              <input class="input" type="text" placeholder="Kowalski"/>
+            </div>
+          </div>
+          <div class="form-grid" style="margin-bottom:0;">
+            <div class="field">
+              <label class="label">Telefon <span class="req">*</span></label>
+              <input class="input" type="tel" placeholder="500 123 456"/>
+              <span class="field-note">Na ten numer wyślemy kod do paczkomatu.</span>
+            </div>
+            <div class="field">
+              <label class="label">Wybrany paczkomat</label>
+              <input class="input" type="text" placeholder="np. WAW123M"/>
+              <span class="field-note warn">⚠ Podaj kod paczkomatu lub wybierz na mapie (mapa w następnym kroku).</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KONTO BANKOWE -->
+    <div class="card">
+      <div class="card-head">
+        <h2>Numer konta do wypłaty</h2>
+        <p>Na to konto przelemy pieniądze po weryfikacji paczki.</p>
+      </div>
+      <div class="card-body">
+        <div class="account-wrap">
+          <h4>🏦 Konto bankowe (IBAN)</h4>
+          <p>Podaj swój numer konta bankowego. Pieniądze trafiają na konto w ciągu 48h od pozytywnej weryfikacji.</p>
+          <div class="iban-row">
+            <div class="iban-prefix">PL</div>
+            <div class="field" style="flex:1;">
+              <input class="input" type="text" placeholder="00 0000 0000 0000 0000 0000 0000" maxlength="32" id="ibanInput"/>
+            </div>
+          </div>
+          <div class="privacy-note">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>Twój numer konta jest szyfrowany i używany wyłącznie do wypłaty środków za skupione książki. Nie udostępniamy go osobom trzecim.</span>
+          </div>
+        </div>
+      </div>
+      <div class="submit-area">
+        <a href="skup.html" class="back-btn">← Wróć do wyceny</a>
+        <button class="submit-btn" onclick="goToSummary()">Przejdź do podsumowania →</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sum-card">
+      <div class="sum-head">
+        <h3>Twoje książki</h3>
+        <a href="skup.html">Edytuj</a>
+      </div>
+      <div class="sum-body">
+        <div class="sum-book">
+          <div class="sum-book-cover">📖</div>
+          <div style="flex:1;">
+            <div class="sum-book-title">Harry Potter i Kamień Filozoficzny</div>
+            <div class="sum-book-qty">1 szt.</div>
+          </div>
+          <div class="sum-book-price">6,50 zł</div>
+        </div>
+        <div class="sum-book">
+          <div class="sum-book-cover">📖</div>
+          <div style="flex:1;">
+            <div class="sum-book-title">Wiedźmin: Ostatnie życzenie</div>
+            <div class="sum-book-qty">2 szt.</div>
+          </div>
+          <div class="sum-book-price">11,60 zł</div>
+        </div>
+        <div class="sum-book">
+          <div class="sum-book-cover">📖</div>
+          <div style="flex:1;">
+            <div class="sum-book-title">Solaris</div>
+            <div class="sum-book-qty">1 szt.</div>
+          </div>
+          <div class="sum-book-price">4,10 zł</div>
+        </div>
+        <div class="sum-book">
+          <div class="sum-book-cover">📖</div>
+          <div style="flex:1;">
+            <div class="sum-book-title">Lalka</div>
+            <div class="sum-book-qty">3 szt.</div>
+          </div>
+          <div class="sum-book-price">10,50 zł</div>
+        </div>
+        <div class="sum-book">
+          <div class="sum-book-cover">📖</div>
+          <div style="flex:1;">
+            <div class="sum-book-title">Pan Tadeusz</div>
+            <div class="sum-book-qty">4 szt.</div>
+          </div>
+          <div class="sum-book-price">8,80 zł</div>
+        </div>
+        <div class="sum-total-row">
+          <span>Łącznie do wypłaty</span>
+          <span>41,50 zł</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <h4>🔒 Bezpieczeństwo danych</h4>
+      <div class="info-item"><div class="info-dot"></div><span>Połączenie szyfrowane SSL (HTTPS)</span></div>
+      <div class="info-item"><div class="info-dot"></div><span>Dane nie są udostępniane osobom trzecim</span></div>
+      <div class="info-item"><div class="info-dot"></div><span>Numer konta używany wyłącznie do wypłaty</span></div>
+      <div class="info-item"><div class="info-dot"></div><span>Zgodność z RODO</span></div>
+    </div>
+
+    <div class="info-card">
+      <h4>❓ Masz pytania?</h4>
+      <div class="info-item"><div class="info-dot"></div><span>📞 511 825 915</span></div>
+      <div class="info-item"><div class="info-dot"></div><span>✉ <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="aad9c1c6cfdac1dfc6dedfd8cbddd8cbc9cbeacdc7cbc3c684c9c5c7">[email&#160;protected]</a></span></div>
+      <div class="info-item"><div class="info-dot"></div><span>Pon–Pt 8:00–16:00</span></div>
+    </div>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+function selectShip(type){
+  document.getElementById('optDHL').classList.toggle('selected', type==='dhl');
+  document.getElementById('optInpost').classList.toggle('selected', type==='inpost');
+  document.getElementById('dhlFields').style.display = type==='dhl'?'block':'none';
+  document.getElementById('inpostFields').style.display = type==='inpost'?'block':'none';
+}
+
+document.getElementById('ibanInput').addEventListener('input',function(){
+  let v = this.value.replace(/\D/g,'').slice(0,26);
+  let out = '';
+  for(let i=0;i<v.length;i++){
+    if(i>0&&i%4===0) out+=' ';
+    out+=v[i];
+  }
+  this.value=out;
+});
+
+function handleGoogleLogin(){
+  alert('Tu nastąpi przekierowanie do logowania przez Google (OAuth
