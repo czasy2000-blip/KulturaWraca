@@ -201,7 +201,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--text);background:#F4F4F4;font-
           </div>
           <button class="isbn-add" id="addBtn" onclick="addBook()">Dodaj</button>
         </div>
-        <a class="isbn-sub" href="#">+ Dodaj książkę bez numeru ISBN</a>
+        <a class="isbn-sub" href="#" onclick="addNoISBN(); return false;">+ Dodaj książkę bez numeru ISBN <span style="color:#888;font-weight:400;">(wycena: 0,10 zł/szt.)</span></a>
       </div>
 
       <div class="loading-row" id="loadingRow">
@@ -402,7 +402,47 @@ function showLoading(v){ document.getElementById('loadingRow').style.display = v
 function showError(msg){ const r=document.getElementById('errorRow'); r.style.display='flex'; document.getElementById('errorMsg').textContent=msg; }
 function hideError(){ document.getElementById('errorRow').style.display='none'; }
 
-document.getElementById('isbnInput').addEventListener('keydown',e=>{ if(e.key==='Enter') addBook(); });
+// No-ISBN books — fixed price 0.10 zł
+function addNoISBN(){
+  document.getElementById('noIsbnModal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeNoIsbnModal(){
+  document.getElementById('noIsbnModal').style.display = 'none';
+  document.body.style.overflow = '';
+  document.getElementById('noIsbnForm').reset();
+}
+
+function submitNoIsbn(){
+  const title = document.getElementById('niTitle').value.trim();
+  const author = document.getElementById('niAuthor').value.trim();
+  const year = document.getElementById('niYear').value.trim();
+  const publisher = document.getElementById('niPublisher').value.trim();
+
+  if(!title){ alert('Wpisz tytuł książki.'); return; }
+  if(!author){ alert('Wpisz autora.'); return; }
+  if(!year || isNaN(year) || year < 1400 || year > new Date().getFullYear()){
+    alert('Wpisz prawidłowy rok wydania.'); return;
+  }
+
+  closeNoIsbnModal();
+
+  const id = 'NO-ISBN-' + Date.now();
+  const label = publisher ? `${title} (${year}, ${publisher})` : `${title} (${year})`;
+
+  books.push({
+    isbn: id,
+    title: label,
+    author: author,
+    price: 0.10,
+    cover: '',
+    qty: 1,
+    noIsbn: true
+  });
+  render();
+}
+
 document.getElementById('isbnInput').addEventListener('input',function(){
   let v = this.value.replace(/[^\d]/g,'');
   if(v.length>13) v=v.slice(0,13);
@@ -414,7 +454,46 @@ document.getElementById('isbnInput').addEventListener('input',function(){
   this.value=fmt;
 });
 </script>
-<!-- SCANNER MODAL -->
+<!-- NO ISBN MODAL -->
+<div id="noIsbnModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:999;align-items:center;justify-content:center;padding:1rem;">
+  <div style="background:#fff;border-radius:14px;padding:1.75rem;max-width:440px;width:100%;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;">
+      <div>
+        <h3 style="font-size:16px;font-weight:700;color:#1C1C1C;font-family:'DM Sans',sans-serif;">Dodaj książkę bez ISBN</h3>
+        <p style="font-size:12px;color:#888;margin-top:3px;">Wycena: <strong>0,10 zł za sztukę</strong></p>
+      </div>
+      <button onclick="closeNoIsbnModal()" style="width:30px;height:30px;border:none;background:#F0F0F0;border-radius:50%;cursor:pointer;font-size:15px;">✕</button>
+    </div>
+    <form id="noIsbnForm" onsubmit="event.preventDefault();submitNoIsbn();">
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;flex-direction:column;gap:5px;">
+          <label style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#999;">Tytuł książki *</label>
+          <input id="niTitle" type="text" placeholder="np. Chłopi" style="border:1.5px solid #E0E0E0;border-radius:8px;padding:0 14px;height:42px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;" required/>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px;">
+          <label style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#999;">Autor *</label>
+          <input id="niAuthor" type="text" placeholder="np. Władysław Reymont" style="border:1.5px solid #E0E0E0;border-radius:8px;padding:0 14px;height:42px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;" required/>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            <label style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#999;">Rok wydania *</label>
+            <input id="niYear" type="number" placeholder="np. 1952" min="1400" max="2025" style="border:1.5px solid #E0E0E0;border-radius:8px;padding:0 14px;height:42px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;" required/>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            <label style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#999;">Wydawnictwo</label>
+            <input id="niPublisher" type="text" placeholder="np. PIW" style="border:1.5px solid #E0E0E0;border-radius:8px;padding:0 14px;height:42px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;"/>
+          </div>
+        </div>
+        <div style="background:#FFF8F0;border:1px solid #FDDEB8;border-radius:8px;padding:10px 12px;font-size:12px;color:#7A5020;line-height:1.6;">
+          ℹ Książki bez numeru ISBN wyceniamy na <strong>0,10 zł za sztukę</strong>. Przy wycenie sprawdzamy czy pozycja jest dostępna na Allegro w kategorii Antykwariat — jeśli tak, możemy zaproponować wyższą cenę.
+        </div>
+        <button type="submit" style="background:#7A1E2E;color:#fff;border:none;border-radius:8px;padding:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:4px;">Dodaj do listy →</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
 <div id="scannerOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:999;align-items:center;justify-content:center;flex-direction:column;">
   <div style="background:#fff;border-radius:16px;padding:1.5rem;max-width:380px;width:92%;text-align:center;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
