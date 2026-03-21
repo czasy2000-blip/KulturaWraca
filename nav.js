@@ -97,7 +97,17 @@ if(navEl) navEl.outerHTML = NAV_HTML;
 if(footerEl) footerEl.outerHTML = FOOTER_HTML;
 
 // Mark active nav link
-const page = location.pathname.split('/').pop().replace('.html','') || 'index';
+const rawPage = location.pathname.split('/').pop().replace('.html','');
+const page = rawPage === '' ? 'index' : rawPage;
 document.querySelectorAll('.nav-links a').forEach(a=>{
   if(a.dataset.page === page) a.classList.add('act');
+});
+
+// Smooth scroll for anchor links
+document.addEventListener('click', function(e){
+  const a = e.target.closest('a[href^="#"]');
+  if(!a) return;
+  const id = a.getAttribute('href').slice(1);
+  const el = document.getElementById(id);
+  if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth'}); }
 });
