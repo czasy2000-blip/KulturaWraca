@@ -448,9 +448,13 @@ function previewPhoto(input){
 }
 
 
+function closeNoIsbnModal(){
   document.getElementById('noIsbnModal').style.display = 'none';
   document.body.style.overflow = '';
   document.getElementById('noIsbnForm').reset();
+  document.getElementById('photoPreview').style.display = 'none';
+  document.getElementById('photoText').textContent = '📷 Dodaj zdjęcie okładki';
+  document.getElementById('photoLabel').style.borderColor = '#DDD';
 }
 
 function submitNoIsbn(){
