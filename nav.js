@@ -81,6 +81,44 @@ const FOOTER_HTML = `
       <a href="/KulturaWraca/skup-ksiazek-lublin.html">Skup książek Lublin</a>
     </div>
   </div>
+
+  <div style="border-top:1px solid #253545;padding-top:1.5rem;margin-top:0;max-width:1100px;margin:0 auto;padding-left:0;padding-right:0;">
+    <p style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#4a6070;margin-bottom:10px;">Skup książek i płyt — miasta</p>
+    <div style="font-size:11px;line-height:2;color:#3a5060;">
+      <a href="/KulturaWraca/skup-ksiazek-wroclaw.html" style="color:#3a5060;text-decoration:none;margin-right:8px;">Skup książek Wrocław</a>
+      <a href="/KulturaWraca/skup-ksiazek-warszawa.html" style="color:#3a5060;text-decoration:none;margin-right:8px;">Skup książek Warszawa</a>
+      <a href="/KulturaWraca/skup-ksiazek-krakow.html" style="color:#3a5060;text-decoration:none;margin-right:8px;">Skup książek Kraków</a>
+      <a href="/KulturaWraca/skup-ksiazek-poznan.html" style="color:#3a5060;text-decoration:none;margin-right:8px;">Skup książek Poznań</a>
+      <a href="/KulturaWraca/skup-ksiazek-gdansk.html" style="color:#3a5060;text-decoration:none;margin-right:8px;">Skup książek Gdańsk</a>
+      <a href="/KulturaWraca/skup-ksiazek-lodz.html" style="color:#3a5060;text-decoration:none;margin-right:8px;">Skup książek Łódź</a>
+      <a href="/KulturaWraca/skup-ksiazek-katowice.html" style="color:#3a5060;text-decoration:none;margin-right:8px;">Skup książek Katowice</a>
+      <a href="/KulturaWraca/skup-ksiazek-walbrzych.html" style="color:#3a5060;text-decoration:none;margin-right:8px;">Skup książek Wałbrzych</a>
+      <a href="/KulturaWraca/skup-ksiazek-jelenia-gora.html" style="color:#3a5060;text-decoration:none;margin-right:8px;">Skup książek Jelenia Góra</a>
+      <a href="/KulturaWraca/skup-ksiazek-legnica.html" style="color:#3a5060;text-decoration:none;margin-right:8px;">Skup książek Legnica</a>
+      <a href="/KulturaWraca/skup-ksiazek-zielona-gora.html" style="color:#3a5060;text-decoration:none;margin-right:8px;">Skup książek Zielona Góra</a>
+      <a href="/KulturaWraca/skup-ksiazek-ostrow-wlkp.html" style="color:#3a5060;text-decoration:none;margin-right:8px;">Skup książek Ostrów Wielkopolski</a>
+      <a href="/KulturaWraca/skup-ksiazek-bydgoszcz.html" style="color:#3a5060;text-decoration:none;margin-right:8px;">Skup książek Bydgoszcz</a>
+      <a href="/KulturaWraca/skup-ksiazek-szczecin.html" style="color:#3a5060;text-decoration:none;margin-right:8px;">Skup książek Szczecin</a>
+      <a href="/KulturaWraca/skup-ksiazek-rzeszow.html" style="color:#3a5060;text-decoration:none;margin-right:8px;">Skup książek Rzeszów</a>
+      <a href="/KulturaWraca/skup-ksiazek-lublin.html" style="color:#3a5060;text-decoration:none;margin-right:8px;">Skup książek Lublin</a>
+      <span style="margin-right:8px;color:#3a5060;">Skup książek Śląsk</span>
+      <span style="margin-right:8px;color:#3a5060;">Skup książek Trójmiasto</span>
+      <span style="margin-right:8px;color:#3a5060;">Skup książek Toruń</span>
+      <span style="margin-right:8px;color:#3a5060;">Skup książek Białystok</span>
+      <span style="margin-right:8px;color:#3a5060;">Skup książek Kielce</span>
+      <span style="margin-right:8px;color:#3a5060;">Skup książek Olsztyn</span>
+      <span style="margin-right:8px;color:#3a5060;">Skup płyt audio online</span>
+      <span style="margin-right:8px;color:#3a5060;">Skup winyli</span>
+      <span style="margin-right:8px;color:#3a5060;">Skup DVD i Blu-ray</span>
+      <span style="margin-right:8px;color:#3a5060;">Skup podręczników</span>
+      <span style="margin-right:8px;color:#3a5060;">Skup książek akademickich</span>
+      <span style="margin-right:8px;color:#3a5060;">Skup komiksów</span>
+      <span style="margin-right:8px;color:#3a5060;">Skup książek dla dzieci</span>
+      <span style="margin-right:8px;color:#3a5060;">Skup starych książek</span>
+      <span style="margin-right:8px;color:#3a5060;">Skup antykwaryczny</span>
+      <span style="margin-right:8px;color:#3a5060;">Hurtowy skup książek</span>
+    </div>
+  </div>
   <div class="footer-bottom">
     <p>© 2026 KulturaWraca | NIP: 8952249461 | skupujemykulture.pl — Wszystkie prawa zastrzeżone.</p>
     <div class="footer-bottom-links">
