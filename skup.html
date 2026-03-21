@@ -485,7 +485,7 @@ document.getElementById('isbnInput').addEventListener('input',function(){
           </div>
         </div>
         <div style="background:#FFF8F0;border:1px solid #FDDEB8;border-radius:8px;padding:10px 12px;font-size:12px;color:#7A5020;line-height:1.6;">
-          ℹ Książki bez numeru ISBN wyceniamy na <strong>0,10 zł za sztukę</strong>. Przy wycenie sprawdzamy czy pozycja jest dostępna na Allegro w kategorii Antykwariat — jeśli tak, możemy zaproponować wyższą cenę.
+          ℹ Książki bez numeru ISBN przyjmujemy po <strong>0,10 zł za sztukę</strong>. Podaj tytuł, autora i rok wydania — sprawdzimy pozycję w naszej bazie i jeśli się kwalifikuje, możemy zaproponować wyższą cenę.
         </div>
         <button type="submit" style="background:#7A1E2E;color:#fff;border:none;border-radius:8px;padding:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:4px;">Dodaj do listy →</button>
       </div>
@@ -589,6 +589,7 @@ document.getElementById('scannerOverlay').addEventListener('click', function(e){
 window.addEventListener('load', function(){
   const params = new URLSearchParams(location.search);
   if(params.get('scan') === '1') setTimeout(openScanner, 600);
+  if(params.get('noisbn') === '1') setTimeout(addNoISBN, 400);
   if(params.get('isbn')){
     document.getElementById('isbnInput').value = params.get('isbn');
     setTimeout(addBook, 300);
