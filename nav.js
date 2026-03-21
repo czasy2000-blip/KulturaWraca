@@ -22,7 +22,7 @@ const NAV_HTML = `
         <svg viewBox="0 0 24 24" fill="#1877F2" width="16" height="16"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
         Facebook
       </a>
-      <a href="/KulturaWraca/skup.html" class="btn-nav">Sprzedaj książkę →</a>
+      <a href="/KulturaWraca/skup.html" class="btn-nav" style="background:#7A1E2E;color:#fff;border-radius:7px;padding:9px 18px;font-size:13px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:5px;">Sprzedaj książkę →</a>
     </div>
   </div>
 </nav>`;
