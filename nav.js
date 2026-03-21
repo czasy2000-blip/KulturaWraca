@@ -33,16 +33,16 @@ const FOOTER_HTML = `
     <div>
       <div class="footer-logo">
         <div class="footer-logo-icon">
-          <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          <svg viewBox="0 0 24 24" width="18" height="18"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
         </div>
         <div class="footer-logo-name"><span>Kultura</span>Wraca</div>
       </div>
       <p class="footer-desc">Skupujemy używane książki z całej Polski od ponad 4 lat. Każda książka trafia do nowego czytelnika, nie na makulaturę.</p>
       <div class="footer-contact">
-        <a href="tel:+48511825915"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>511 825 915</a>
-        <a href="mailto:sklepkulturawraca@gmail.com"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>sklepkulturawraca@gmail.com</a>
-        <a href="/KulturaWraca/kontakt.html"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>ul. Wrocławska 1/3, 63-400 Ostrów Wlkp.</a>
-        <a href="https://www.facebook.com/profile.php?id=100090801495391" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>facebook.com/kulturawraca</a>
+        <a href="tel:+48511825915"><svg viewBox="0 0 24 24" width="14" height="14" style="flex-shrink:0"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>511 825 915</a>
+        <a href="mailto:sklepkulturawraca@gmail.com"><svg viewBox="0 0 24 24" width="14" height="14" style="flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>sklepkulturawraca@gmail.com</a>
+        <a href="/KulturaWraca/kontakt.html"><svg viewBox="0 0 24 24" width="14" height="14" style="flex-shrink:0"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>ul. Wrocławska 1/3, 63-400 Ostrów Wlkp.</a>
+        <a href="https://www.facebook.com/profile.php?id=100090801495391" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none" width="14" height="14" style="flex-shrink:0"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>facebook.com/kulturawraca</a>
       </div>
     </div>
     <div class="footer-col">
