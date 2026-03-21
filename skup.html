@@ -196,7 +196,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--text);background:#F4F4F4;font-
         <div class="isbn-label">Numer ISBN</div>
         <div class="isbn-row">
           <input class="isbn-input" id="isbnInput" type="text" placeholder="np. 978-83-08-07123-4" maxlength="17"/>
-          <div class="isbn-cam" title="Skanuj aparatem">
+          <div class="isbn-cam" title="Skanuj aparatem" onclick="openScanner()">
             <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
           </div>
           <button class="isbn-add" id="addBtn" onclick="addBook()">Dodaj</button>
@@ -412,6 +412,86 @@ document.getElementById('isbnInput').addEventListener('input',function(){
     fmt+=v[i];
   }
   this.value=fmt;
+});
+</script>
+<!-- SCANNER MODAL -->
+<div id="scannerOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:999;align-items:center;justify-content:center;flex-direction:column;">
+  <div style="background:#fff;border-radius:16px;padding:1.5rem;max-width:360px;width:90%;text-align:center;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+      <div>
+        <h3 style="font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;color:#1C1C1C;">Skanuj kod ISBN</h3>
+        <p style="font-size:12px;color:#6B6B6B;margin-top:2px;">Przyłóż kamerę do tylnej okładki</p>
+      </div>
+      <button onclick="closeScanner()" style="width:32px;height:32px;border:none;background:#F0F0F0;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;">✕</button>
+    </div>
+    <div style="position:relative;border-radius:12px;overflow:hidden;background:#000;">
+      <video id="scannerVideo" style="width:100%;height:260px;object-fit:cover;display:block;" playsinline></video>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;">
+        <div style="width:220px;height:100px;border:2px solid #7A1E2E;border-radius:8px;box-shadow:0 0 0 999px rgba(0,0,0,.4);"></div>
+      </div>
+    </div>
+    <div id="scannerStatus" style="margin-top:12px;font-size:12px;color:#6B6B6B;font-family:'DM Sans',sans-serif;">Szukam kodu kreskowego...</div>
+    <button onclick="closeScanner()" style="margin-top:12px;width:100%;background:#F0F0F0;border:none;border-radius:8px;padding:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">Anuluj</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@zxing/library@0.19.1/umd/index.min.js"></script>
+<script>
+let codeReader = null;
+let scannerActive = false;
+
+function openScanner(){
+  const overlay = document.getElementById('scannerOverlay');
+  overlay.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  document.getElementById('scannerStatus').textContent = 'Uruchamiam kamerę...';
+
+  try {
+    codeReader = new ZXing.BrowserMultiFormatReader();
+    codeReader.decodeFromVideoDevice(null, 'scannerVideo', (result, err) => {
+      if(result){
+        const text = result.getText();
+        // Filter only EAN-13 / ISBN codes starting with 978 or 979
+        const clean = text.replace(/[^0-9]/g,'');
+        if(clean.length >= 10){
+          closeScanner();
+          document.getElementById('isbnInput').value = formatISBN(clean);
+          document.getElementById('scannerStatus').textContent = 'Znaleziono: ' + text;
+          setTimeout(()=>{ addBook(); }, 300);
+        }
+      }
+      if(err && !(err instanceof ZXing.NotFoundException)){
+        document.getElementById('scannerStatus').textContent = 'Szukam kodu kreskowego...';
+      }
+    });
+    document.getElementById('scannerStatus').textContent = 'Szukam kodu kreskowego...';
+  } catch(e) {
+    document.getElementById('scannerStatus').textContent = 'Brak dostępu do kamery. Wpisz ISBN ręcznie.';
+  }
+}
+
+function closeScanner(){
+  if(codeReader){
+    codeReader.reset();
+    codeReader = null;
+  }
+  document.getElementById('scannerOverlay').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function formatISBN(v){
+  v = v.slice(0,13);
+  let out = '';
+  for(let i=0;i<v.length;i++){
+    if(i===3||i===5||i===11) out+='-';
+    out+=v[i];
+  }
+  return out;
+}
+
+// Close on overlay click
+document.getElementById('scannerOverlay').addEventListener('click', function(e){
+  if(e.target === this) closeScanner();
 });
 </script>
 </body>
